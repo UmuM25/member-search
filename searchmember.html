@@ -3,25 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ระบบตรวจสอบสมาชิก | สหกรณ์ออมทรัพย์ครูชุมพร จำกัด</title>
+    <title>ระบบตรวจสอบสิทธิเลือกตั้ง | สหกรณ์ออมทรัพย์ครูชุมพร จำกัด</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <style>
         :root {
             --primary-dark: #1a365d;
-            --primary: #2d5288;
+            --primary: #2b6cb0;
+            --primary-light: #ebf8ff;
             --accent: #d4af37;
             --secondary: #4a5568;
-            --light-gray: #f7fafc;
+            --light-gray: #f8fafc;
             --border-color: #e2e8f0;
             --text-dark: #2d3748;
             --text-light: #718096;
-            --shadow: 0 2px 10px rgba(0,0,0,0.08);
-            --radius: 8px;
+            --shadow: 0 4px 20px rgba(0,0,0,0.06);
+            --radius: 12px;
             --success: #38a169;
             --error: #e53e3e;
-            --warning: #dd6b20;
+            --bg-body: linear-gradient(135deg, #f0f4f8 0%, #d9e2ec 100%);
+            --bg-card: white;
+            --text-main: #2d3748;
+        }
+
+        [data-theme="dark"] {
+            --bg-body: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+            --bg-card: #2d3748;
+            --text-main: #f7fafc;
+            --text-dark: #f7fafc;
+            --text-light: #cbd5e0;
+            --border-color: #4a5568;
+            --light-gray: #4a5568;
+            --shadow: 0 4px 20px rgba(0,0,0,0.3);
         }
 
         * {
@@ -31,584 +45,835 @@
             font-family: 'Noto Sans Thai', sans-serif;
         }
 
+        html { font-size: 16px; }
+
         body {
-            background: linear-gradient(135deg, #edf2f7 0%, #e2e8f0 100%);
-            color: var(--text-dark);
+            background: var(--bg-body);
+            color: var(--text-main);
             min-height: 100vh;
             line-height: 1.6;
-            overflow-x: hidden;
+            padding: 15px;
+            transition: background 0.3s, color 0.3s;
         }
 
-        /* Top Navigation Bar */
-        .top-bar {
-            background: linear-gradient(90deg, var(--primary-dark), var(--primary));
-            color: white;
-            padding: 12px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            position: relative;
-            z-index: 100;
-        }
-
-        .top-bar .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-weight: 600;
-            font-size: 1.2rem;
-        }
-
-        .top-bar .logo i {
-            color: var(--accent);
-            font-size: 1.5rem;
-        }
-
-        .system-status {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 0.85rem;
-        }
-
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--success);
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-
-        /* Main Container */
         .container {
-            max-width: 800px;
-            margin: 30px auto;
-            padding: 0 20px;
+            max-width: 900px;
+            margin: 20px auto;
         }
 
-        /* Header */
+        .toolbar {
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+
+        .tool-btn {
+            background: var(--bg-card);
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 6px 12px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+        }
+
+        .tool-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
         .page-header {
             text-align: center;
-            margin-bottom: 30px;
-            padding: 25px;
-            background: white;
+            margin-bottom: 25px;
+            padding: 30px 20px;
+            background: var(--bg-card);
             border-radius: var(--radius);
             box-shadow: var(--shadow);
-            border-left: 5px solid var(--accent);
-            position: relative;
-            overflow: hidden;
+            border-bottom: 4px solid var(--accent);
+            transition: background 0.3s;
         }
 
-        .page-header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
+        .logo-container {
             width: 100px;
             height: 100px;
-            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), transparent);
-            border-radius: 0 0 0 100%;
+            margin: 0 auto 15px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            padding: 5px;
+        }
+
+        .logo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 50%;
         }
 
         .page-header h1 {
-            color: var(--primary-dark);
-            margin-bottom: 10px;
-            font-size: 1.8rem;
+            color: var(--primary);
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
         }
 
         .page-header p {
             color: var(--text-light);
-            max-width: 600px;
-            margin: 0 auto;
+            font-size: 0.95rem;
         }
 
-        /* Form Section */
-        .form-section {
-            background: white;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            padding: 30px;
-            margin-bottom: 25px;
-            position: relative;
-            transition: transform 0.3s ease;
-        }
-
-        .form-section:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        .section-title {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid var(--border-color);
-        }
-
-        .section-title i {
-            color: var(--primary);
-            font-size: 1.2rem;
-        }
-
-        .section-title h2 {
-            color: var(--primary-dark);
-            font-size: 1.3rem;
-            font-weight: 600;
-        }
-
-        /* Form Grid */
-        .form-grid {
+        .info-panel {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: 1fr 1fr;
             gap: 20px;
             margin-bottom: 25px;
         }
 
-        .form-group {
-            margin-bottom: 20px;
-            position: relative;
+        @media (max-width: 768px) {
+            .info-panel { grid-template-columns: 1fr; }
         }
+
+        .announcement-box, .countdown-box {
+            background: var(--bg-card);
+            padding: 20px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            transition: background 0.3s;
+        }
+
+        .announcement-box h3, .countdown-box h3 {
+            font-size: 1.05rem;
+            color: var(--primary);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 8px;
+        }
+
+        .announcement-content {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .announcement-content ul {
+            padding-left: 20px;
+            margin-top: 8px;
+        }
+
+        .countdown-grid {
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .time-item span {
+            display: block;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .time-item label {
+            font-size: 0.75rem;
+            color: var(--text-light);
+        }
+
+        .election-banner {
+            display: none;
+            background: linear-gradient(135deg, var(--success), #2f855a);
+            color: white;
+            padding: 20px;
+            border-radius: var(--radius);
+            text-align: center;
+            margin-bottom: 25px;
+            box-shadow: var(--shadow);
+            animation: pulse 2s infinite;
+        }
+
+        .election-banner.show { display: block; }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.01); }
+        }
+
+        .form-section {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 25px;
+            margin-bottom: 25px;
+            transition: background 0.3s;
+        }
+
+        .form-title {
+            margin-bottom: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .form-grid { grid-template-columns: 1fr; }
+        }
+
+        .form-group { margin-bottom: 10px; }
 
         .form-label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             font-weight: 500;
+            font-size: 0.9rem;
             color: var(--text-dark);
-            font-size: 0.95rem;
         }
 
         .form-control {
             width: 100%;
-            padding: 14px 15px;
+            padding: 12px 15px;
             border: 1px solid var(--border-color);
-            border-radius: 6px;
+            border-radius: 8px;
             font-size: 1rem;
-            transition: all 0.3s;
             background: var(--light-gray);
+            color: var(--text-dark);
             font-family: 'Courier New', monospace;
-            font-size: 1.1rem;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
+            transition: all 0.3s;
         }
 
         .form-control:focus {
             outline: none;
             border-color: var(--primary);
-            background: white;
-            box-shadow: 0 0 0 3px rgba(45, 82, 136, 0.1);
+            background: var(--bg-card);
+            box-shadow: 0 0 0 3px rgba(43, 108, 176, 0.15);
         }
 
-        .form-hint {
-            font-size: 0.85rem;
-            color: var(--text-light);
-            margin-top: 5px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
+        .form-control.error {
+            border-color: var(--error);
+            background: #fff5f5;
+            box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.15);
         }
 
-        /* Button */
         .btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-            padding: 14px 25px;
-            border-radius: 6px;
-            font-weight: 500;
+            gap: 8px;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 600;
             font-size: 1rem;
             border: none;
             cursor: pointer;
             transition: all 0.3s;
-            min-width: 150px;
+            text-decoration: none;
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, var(--primary), #3c6ea8);
+            background: var(--primary);
             color: white;
-            border: 1px solid var(--primary);
+            width: 100%;
         }
 
-        .btn-primary:hover {
-            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        }
+        .btn-primary:hover { background: var(--primary-dark); }
+        .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
 
-        .btn-primary:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-
-        .btn-secondary {
-            background: white;
-            color: var(--primary);
-            border: 1px solid var(--primary);
-        }
-
-        .btn-secondary:hover {
-            background: var(--light-gray);
-        }
-
-        .btn-success {
-            background: linear-gradient(135deg, var(--success), #48bb78);
+        .btn-help {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--success);
             color: white;
-            border: 1px solid var(--success);
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            box-shadow: var(--shadow);
+            z-index: 100;
+            font-size: 1.3rem;
         }
 
-        .btn-success:hover {
-            background: linear-gradient(135deg, #2f855a, var(--success));
-        }
+        .btn-help:hover { background: #2f855a; }
 
-        /* Status Messages */
         .status-message {
-            padding: 15px;
-            border-radius: var(--radius);
-            margin: 20px 0;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 15px;
             font-weight: 500;
+            text-align: center;
             display: none;
-            animation: slideIn 0.3s ease;
+            font-size: 0.9rem;
+        }
+        .status-error { background: #fff5f5; color: var(--error); border: 1px solid #feb2b2; display: block; }
+        .status-success { background: #f0fff4; color: var(--success); border: 1px solid #9ae6b4; display: block; }
+        .status-loading { background: var(--primary-light); color: var(--primary); border: 1px solid #90cdf4; display: block; }
+
+        .skeleton-loader {
+            display: none;
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 25px;
+            margin-bottom: 25px;
         }
 
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .skeleton-loader.show { display: block; }
+
+        .skeleton-item {
+            height: 20px;
+            background: linear-gradient(90deg, #e2e8f0 25%, #cbd5e0 50%, #e2e8f0 75%);
+            background-size: 200% 100%;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            animation: shimmer 1.5s infinite;
         }
 
-        .status-error {
-            background: linear-gradient(135deg, #fff5f5, #fed7d7);
-            color: var(--error);
-            border: 1px solid #fc8181;
-            display: block;
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
         }
 
-        .status-success {
-            background: linear-gradient(135deg, #f0fff4, #c6f6d5);
-            color: #276749;
-            border: 1px solid #9ae6b4;
-            display: block;
-        }
-
-        .status-loading {
-            background: linear-gradient(135deg, #ebf8ff, #bee3f8);
-            color: var(--primary);
-            border: 1px solid #90cdf4;
-            display: block;
-        }
-
-        /* Result Section */
         .result-section {
-            background: white;
+            background: var(--bg-card);
             border-radius: var(--radius);
             box-shadow: var(--shadow);
             margin-top: 25px;
             display: none;
             overflow: hidden;
-            animation: fadeIn 0.5s ease;
+            animation: fadeIn 0.4s ease;
+            transition: background 0.3s;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
+        /* พื้นที่ที่ใช้บันทึกภาพ: รวมหัว + เนื้อหา ไม่รวมปุ่ม */
+        #captureArea {
+            border-radius: var(--radius);
+            overflow: hidden;
+            background: white;
+        }
+
         .result-header {
-            background: linear-gradient(90deg, var(--primary-dark), var(--primary));
+            background: var(--primary-dark);
             color: white;
-            padding: 20px;
+            padding: 15px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .result-header h3 {
-            font-size: 1.2rem;
+        .badge-status {
+            color: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            transition: background 0.3s;
+        }
+
+        .badge-success { background: var(--success); }
+        .badge-error { background: var(--error); }
+
+        .result-content { padding: 20px; }
+
+        .result-section > .action-buttons {
+            padding: 0 20px 20px;
+        }
+
+        #printableArea {
+            background: white;
+            border-radius: var(--radius);
+            overflow: hidden;
+        }
+
+        .print-header {
+            text-align: center;
+            margin-bottom: 15px;
+            padding: 18px 15px 12px;
+            border-bottom: 2px solid var(--primary-dark);
+            background: white;
+        }
+
+        .print-logo {
+            width: 65px;
+            height: 65px;
+            margin: 0 auto 8px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
-            gap: 10px;
+            justify-content: center;
+            background: white;
         }
 
-        .result-content {
-            padding: 25px;
+        .print-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 50%;
         }
 
-        /* Result Table */
+        .print-header h3 { color: var(--primary-dark); font-size: 1.25rem; margin-bottom: 2px; }
+        .print-header p { color: var(--text-light); font-size: 0.82rem; }
+
         .result-table {
             width: 100%;
             border-collapse: collapse;
-            margin: 20px 0;
+            font-size: 1rem;
         }
 
-        .result-table tr {
-            border-bottom: 1px solid var(--border-color);
-            transition: background-color 0.2s;
-        }
-
-        .result-table tr:hover {
-            background-color: rgba(45, 82, 136, 0.02);
-        }
-
-        .result-table tr:last-child {
-            border-bottom: none;
-        }
+        .result-table tr { border-bottom: 1px solid var(--border-color); }
+        .result-table tr:last-child { border-bottom: none; }
 
         .result-table td {
-            padding: 16px 10px;
+            padding: 12px 10px;
             vertical-align: top;
         }
 
         .result-table td:first-child {
-            width: 35%;
-            color: var(--secondary);
-            font-weight: 500;
-            padding-right: 20px;
-            position: relative;
+            width: auto;
+            min-width: 130px;
+            max-width: 35%;
+            color: var(--text-light);
+            font-weight: 600;
+            white-space: nowrap;
+            font-size: 0.95rem;
+            padding-right: 15px;
         }
 
-        .result-table td:first-child::after {
-            content: ':';
-            position: absolute;
-            right: 10px;
-            color: var(--text-light);
+        .result-table td:first-child .label-content {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .result-table td:first-child i {
+            width: 20px;
+            text-align: center;
+            color: var(--primary);
+            flex-shrink: 0;
         }
 
         .result-table td:last-child {
             width: 65%;
             color: var(--text-dark);
-            font-weight: 500;
-            font-family: 'Noto Sans Thai', sans-serif;
+            font-weight: 700;
+            font-size: 1.05rem;
+            line-height: 1.5;
+            word-break: break-word;
+            padding-left: 0;
         }
 
-        /* Action Buttons */
+        .print-footer {
+            text-align: center;
+            margin-top: 8px;
+            padding: 12px;
+            border-top: 1px dashed var(--border-color);
+            color: var(--text-light);
+            font-size: 0.78rem;
+            background: white;
+        }
+
         .action-buttons {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-            padding: 20px;
-            border-top: 1px solid var(--border-color);
-            background: var(--light-gray);
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 18px;
         }
 
-        /* Footer */
-        .footer {
-            text-align: center;
-            padding: 25px 20px;
-            color: var(--text-light);
-            font-size: 0.9rem;
-            margin-top: 40px;
-            border-top: 1px solid var(--border-color);
-            background: white;
+        .btn-secondary { background: var(--bg-card); color: var(--primary); border: 1px solid var(--primary); }
+        .btn-secondary:hover { background: var(--light-gray); }
+        .btn-success { background: var(--success); color: white; }
+        .btn-success:hover { background: #2f855a; }
+
+        .faq-section {
+            background: var(--bg-card);
             border-radius: var(--radius);
             box-shadow: var(--shadow);
+            padding: 25px;
+            margin-bottom: 25px;
+            transition: background 0.3s;
         }
 
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 25px;
-            margin-top: 15px;
-        }
-
-        .footer-links a {
+        .faq-section h3 {
             color: var(--primary);
-            text-decoration: none;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .faq-item { border-bottom: 1px solid var(--border-color); }
+
+        .faq-question {
+            width: 100%;
+            padding: 15px 0;
+            background: none;
+            border: none;
+            text-align: left;
+            font-size: 1rem;
             font-weight: 500;
-            transition: color 0.3s;
+            color: var(--text-dark);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .footer-links a:hover {
-            color: var(--accent);
-            text-decoration: underline;
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            color: var(--text-light);
+            font-size: 0.9rem;
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .top-bar .system-status {
-                display: none;
-            }
-            
-            .form-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .action-buttons {
-                grid-template-columns: 1fr;
-            }
-            
-            .btn {
-                width: 100%;
-                min-width: auto;
-            }
-            
-            .container {
-                padding: 0 15px;
-            }
-            
-            .form-section {
-                padding: 20px;
-            }
+        .faq-answer.open {
+            max-height: 200px;
+            padding-bottom: 15px;
         }
 
-        /* Print Styles */
+        .faq-icon { transition: transform 0.3s; }
+        .faq-question.active .faq-icon { transform: rotate(180deg); }
+
+        .popup-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.6);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .popup-overlay.show { display: flex; }
+
+        .popup-box {
+            background: white;
+            border-radius: var(--radius);
+            max-width: 420px;
+            width: 100%;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            animation: popIn 0.3s ease;
+        }
+
+        @keyframes popIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .popup-box i {
+            font-size: 3rem;
+            color: var(--error);
+            margin-bottom: 15px;
+        }
+
+        .popup-box h3 {
+            color: var(--primary-dark);
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+
+        .popup-box p {
+            color: var(--secondary);
+            margin-bottom: 20px;
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+
+        .popup-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .popup-btn {
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 1rem;
+        }
+
+        .popup-btn-primary {
+            background: var(--success);
+            color: white;
+        }
+
+        .popup-btn-primary:hover { background: #2f855a; }
+
+        .popup-btn-secondary {
+            background: var(--light-gray);
+            color: var(--text-dark);
+        }
+
+        .popup-btn-secondary:hover { background: #e2e8f0; }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: var(--text-light);
+            font-size: 0.85rem;
+            margin-top: 30px;
+        }
+
         @media print {
             body * { visibility: hidden; }
             .result-section, .result-section * { visibility: visible; }
             .result-section {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-                box-shadow: none;
-                border: 1px solid #ccc;
+                position: absolute; left: 0; top: 0;
+                width: 100%; box-shadow: none; border: 1px solid #ccc;
             }
-            .action-buttons, .top-bar, .form-section { display: none; }
+            .action-buttons, .page-header, .form-section, .info-panel,
+            .footer, .toolbar, .faq-section, .btn-help,
+            .election-banner, .skeleton-loader { display: none; }
         }
     </style>
 </head>
 <body>
-    <!-- Top Navigation -->
-    <div class="top-bar">
-        <div class="logo">
-            <i class="fas fa-university"></i>
-            <span>สหกรณ์ออมทรัพย์ครูชุมพร จำกัด</span>
-        </div>
-        <div class="system-status">
-            <div class="status-dot"></div>
-            <span>ระบบพร้อมใช้งาน</span>
-        </div>
-    </div>
-
     <div class="container">
-        <!-- Page Header -->
+        <!-- Toolbar -->
+        <div class="toolbar">
+            <button class="tool-btn" id="fontDecrease" title="ลดขนาดตัวอักษร">
+                <i class="fas fa-font"></i> <i class="fas fa-minus" style="font-size:0.6em;"></i>
+            </button>
+            <button class="tool-btn" id="fontIncrease" title="เพิ่มขนาดตัวอักษร">
+                <i class="fas fa-font"></i> <i class="fas fa-plus" style="font-size:0.6em;"></i>
+            </button>
+            <button class="tool-btn" id="themeToggle" title="สลับธีม">
+                <i class="fas fa-moon"></i> ธีมมืด
+            </button>
+        </div>
+
+        <!-- Header -->
         <div class="page-header">
-            <h1>ระบบตรวจสอบสิทธิลงคะแนนสรรหาผู้แทนสมาชิก</h1>
-            <p>กรุณากรอกข้อมูลเพื่อตรวจสอบสิทธิ์ในการลงคะแนนเลือกตั้งผู้แทนสมาชิก ตามที่ระบุในทะเบียนสมาชิก</p>
+            <div class="logo-container">
+                <img src="https://i.ibb.co/8LhJvtz8/logo.png" alt="โลโก้สหกรณ์ออมทรัพย์ครูชุมพร" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2830/2830284.png'">
+            </div>
+            <h1>สหกรณ์ออมทรัพย์ครูชุมพร จำกัด</h1>
+            <p>ระบบตรวจสอบสิทธิเลือกตั้งผู้แทนสมาชิก</p>
+        </div>
+
+        <!-- Info Panel -->
+        <div class="info-panel">
+            <div class="countdown-box">
+                <h3><i class="fas fa-clock" style="color: var(--accent);"></i> นับถอยหลังวันเลือกตั้ง</h3>
+                <p style="text-align:center; color: var(--text-light); font-size: 0.85rem; margin-bottom: 5px;">28 พฤศจิกายน 2569</p>
+                <div class="countdown-grid" id="countdownTimer">
+                    <div class="time-item"><span id="days">00</span><label>วัน</label></div>
+                    <div class="time-item"><span id="hours">00</span><label>ชั่วโมง</label></div>
+                    <div class="time-item"><span id="minutes">00</span><label>นาที</label></div>
+                    <div class="time-item"><span id="seconds">00</span><label>วินาที</label></div>
+                </div>
+            </div>
+
+            <div class="announcement-box">
+                <h3><i class="fas fa-bullhorn" style="color: var(--primary);"></i> ประกาศสหกรณ์</h3>
+                <div class="announcement-content">
+                    <p><strong>กำหนดการเลือกตั้ง:</strong> วันเสาร์ที่ 28 พฤศจิกายน 2569</p>
+                    <ul>
+                        <li>ตรวจสอบหน่วยเลือกตั้งและลำดับของท่านให้ถูกต้อง</li>
+                        <li>นำบัตรประจำตัวประชาชนหรือบัตรข้าราชการมาแสดงต่อเจ้าหน้าที่</li>
+                        <li>สามารถบันทึกภาพผลตรวจสอบนี้เป็นหลักฐานได้</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Election Day Banner -->
+        <div class="election-banner" id="electionBanner">
+            <h2><i class="fas fa-vote-yea"></i> ถึงวันเลือกตั้งแล้ว!</h2>
+            <p>อย่าลืมไปใช้สิทธิ์เลือกตั้งผู้แทนสมาชิกของท่านตามหน่วยและสถานที่ที่ระบุ</p>
         </div>
 
         <!-- Search Form -->
         <div class="form-section">
-            <div class="section-title">
-                <div>
-                    <i class="fas fa-user-check"></i>
-                    <h2>ตรวจสอบข้อมูลสมาชิก</h2>
-                </div>
+            <div class="form-title">
+                <i class="fas fa-user-check"></i> กรอกข้อมูลเพื่อตรวจสอบสิทธิ์
             </div>
-
             <form id="searchForm">
                 <div class="form-grid">
                     <div class="form-group">
-                        <label class="form-label" for="memberId">
-                            <i class="fas fa-id-badge"></i> เลขทะเบียนสมาชิก
-                        </label>
-                        <input type="text" id="memberId" class="form-control"
-                               maxlength="5" inputmode="numeric"
-                               placeholder="กรอกตัวเลข 5 หลัก" required>
-                        <div class="form-hint">
-                            <i class="fas fa-info-circle"></i> ระบุเลขทะเบียนสมาชิก 5 หลัก
-                        </div>
+                        <label class="form-label" for="memberId">เลขทะเบียนสมาชิก (5 หลัก)</label>
+                        <input type="text" id="memberId" class="form-control" maxlength="5" inputmode="numeric" placeholder="เช่น 13750" required>
                     </div>
-
                     <div class="form-group">
-                        <label class="form-label" for="birthDate">
-                            <i class="fas fa-calendar"></i> วันเดือนปีเกิด (พ.ศ.)
-                        </label>
-                        <input type="text" id="birthDate" class="form-control"
-                               maxlength="10" inputmode="numeric"
-                               placeholder="เช่น 25/07/2527" required>
-                        <div class="form-hint">
-                            <i class="fas fa-info-circle"></i> กรอกวันเกิด 8 หลัก ระบบเติม / ให้อัตโนมัติ
-                        </div>
+                        <label class="form-label" for="birthDate">วันเดือนปีเกิด (พ.ศ.)</label>
+                        <input type="text" id="birthDate" class="form-control" maxlength="10" inputmode="numeric" placeholder="เช่น 25/07/2527" required>
                     </div>
                 </div>
-
-                <div class="form-group" style="text-align: center; margin-top: 25px;">
-                    <button type="submit" id="submitBtn" class="btn btn-primary">
-                        <i class="fas fa-search"></i> ตรวจสอบสิทธิ์
-                    </button>
-                </div>
+                <button type="submit" id="submitBtn" class="btn btn-primary">
+                    <i class="fas fa-search"></i> ตรวจสอบสิทธิ์
+                </button>
             </form>
-
-            <!-- Status Messages -->
             <div id="statusMessage" class="status-message"></div>
+        </div>
+
+        <!-- Skeleton Loader -->
+        <div class="skeleton-loader" id="skeletonLoader">
+            <div class="skeleton-item" style="width: 40%;"></div>
+            <div class="skeleton-item" style="width: 70%;"></div>
+            <div class="skeleton-item" style="width: 60%;"></div>
+            <div class="skeleton-item" style="width: 80%;"></div>
+            <div class="skeleton-item" style="width: 50%;"></div>
         </div>
 
         <!-- Result Section -->
         <div class="result-section" id="resultSection">
-            <div class="result-header">
-                <h3><i class="fas fa-file-alt"></i> ผลการตรวจสอบข้อมูลสมาชิก</h3>
+            <!-- พื้นที่บันทึกภาพ: รวมหัวข้อ + Badge + เนื้อหา -->
+            <div id="captureArea">
+                <div class="result-header">
+                    <h3><i class="fas fa-file-alt"></i> ผลการตรวจสอบข้อมูล</h3>
+                    <span class="badge-status badge-success" id="statusBadge">สิทธิสมบูรณ์</span>
+                </div>
+                <div class="result-content">
+                    <div id="printableArea">
+                        <div class="print-header">
+                            <div class="print-logo">
+                                <img src="https://i.ibb.co/8LhJvtz8/logo.png" alt="โลโก้" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2830/2830284.png'">
+                            </div>
+                            <h3>สหกรณ์ออมทรัพย์ครูชุมพร จำกัด</h3>
+                            <p>ผลการตรวจสอบสิทธิเลือกตั้งผู้แทนสมาชิก</p>
+                        </div>
+
+                        <table class="result-table">
+                            <tr id="rowSeq">
+                                <td><span class="label-content"><i class="fas fa-list-ol"></i> ลำดับที่</span></td>
+                                <td id="resSeq">-</td>
+                            </tr>
+                            <tr id="rowId">
+                                <td><span class="label-content"><i class="fas fa-id-card"></i> ทะเบียนสมาชิก</span></td>
+                                <td id="resId">-</td>
+                            </tr>
+                            <tr id="rowName">
+                                <td><span class="label-content"><i class="fas fa-user"></i> ชื่อ - นามสกุล</span></td>
+                                <td id="resName">-</td>
+                            </tr>
+                            <tr id="rowUnit">
+                                <td><span class="label-content"><i class="fas fa-building"></i> หน่วย</span></td>
+                                <td id="resUnit">-</td>
+                            </tr>
+                            <tr id="rowPlace">
+                                <td><span class="label-content"><i class="fas fa-map-marker-alt"></i> สถานที่ลงคะแนน</span></td>
+                                <td id="resPlace">-</td>
+                            </tr>
+                            <tr id="rowNote">
+                                <td><span class="label-content"><i class="fas fa-info-circle"></i> หมายเหตุ</span></td>
+                                <td id="resNote">-</td>
+                            </tr>
+                        </table>
+
+                        <div class="print-footer">
+                            สหกรณ์ออมทรัพย์ครูชุมพร จำกัด | 77 หมู่ 4 ตำบลบางหมาก อำเภอเมือง จังหวัดชุมพร 86000
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <div class="result-content">
-                <div id="printableArea">
-                    <table class="result-table">
-                        <tr>
-                            <td>ลำดับที่</td>
-                            <td id="resSeq">-</td>
-                        </tr>
-                        <tr>
-                            <td>ทะเบียนสมาชิก</td>
-                            <td id="resId">-</td>
-                        </tr>
-                        <tr>
-                            <td>ชื่อ - นามสกุล</td>
-                            <td id="resName">-</td>
-                        </tr>
-                        <tr>
-                            <td>หน่วย</td>
-                            <td id="resUnit">-</td>
-                        </tr>
-                        <tr>
-                            <td>สถานที่ลงคะแนน</td>
-                            <td id="resPlace">-</td>
-                        </tr>
-                        <tr>
-                            <td>หมายเหตุ</td>
-                            <td id="resNote">-</td>
-                        </tr>
-                    </table>
-                </div>
+            <!-- ปุ่ม action อยู่นอกพื้นที่บันทึกภาพ -->
+            <div class="action-buttons">
+                <button class="btn btn-secondary" id="resetBtn">
+                    <i class="fas fa-redo"></i> ตรวจสอบใหม่
+                </button>
+                <button class="btn btn-success" id="saveImageBtn">
+                    <i class="fas fa-camera"></i> บันทึกรูปภาพ
+                </button>
+            </div>
+        </div>
 
-                <div class="action-buttons">
-                    <button class="btn btn-secondary" id="resetBtn">
-                        <i class="fas fa-redo"></i> ตรวจสอบใหม่
-                    </button>
-                    <button class="btn btn-primary" id="printBtn">
-                        <i class="fas fa-print"></i> พิมพ์รายงาน
-                    </button>
-                    <button class="btn btn-success" id="saveImageBtn">
-                        <i class="fas fa-camera"></i> บันทึกรูปภาพ
-                    </button>
+        <!-- FAQ Section -->
+        <div class="faq-section">
+            <h3><i class="fas fa-question-circle"></i> คำถามที่พบบ่อย</h3>
+            <div class="faq-item">
+                <button class="faq-question">
+                    ลืมเลขทะเบียนสมาชิก ต้องทำอย่างไร?
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                </button>
+                <div class="faq-answer">
+                    สามารถติดต่อสอบถามเลขทะเบียนสมาชิกได้ที่สหกรณ์ออมทรัพย์ครูชุมพร จำกัด หรือโทรสายด่วนด้านล่างขวาหน้าจอ
                 </div>
             </div>
+            <div class="faq-item">
+                <button class="faq-question">
+                    ต้องเตรียมเอกสารอะไรไปลงคะแนน?
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                </button>
+                <div class="faq-answer">
+                    กรุณานำบัตรประจำตัวประชาชนหรือบัตรข้าราชการมาแสดงต่อเจ้าหน้าที่ประจำหน่วยเลือกตั้ง
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">
+                    สามารถลงคะแนนแทนผู้อื่นได้หรือไม่?
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                </button>
+                <div class="faq-answer">
+                    ไม่ได้ การเลือกตั้งต้องมาลงคะแนนด้วยตนเองเท่านั้น ตามระเบียบของสหกรณ์ฯ
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>© 2026 สหกรณ์ออมทรัพย์ครูชุมพร จำกัด | ระบบตรวจสอบสิทธิเลือกตั้งผู้แทนสมาชิก</p>
         </div>
     </div>
 
-    <!-- Footer -->
-    <div class="footer">
-        <p>สหกรณ์ออมทรัพย์ครูชุมพร จำกัด | 77 หมู่ 4 ตำบลบางหมาก อำเภอเมือง จังหวัดชุมพร 86000</p>
-        <div class="footer-links">
-            <a href="#"><i class="fas fa-info-circle"></i> เกี่ยวกับระบบ</a>
-            <a href="#"><i class="fas fa-question-circle"></i> คำถามที่พบบ่อย</a>
-            <a href="#"><i class="fas fa-envelope"></i> ติดต่อสอบถาม</a>
+    <!-- Help Button -->
+    <a href="tel:077580142" class="btn btn-help" title="โทรติดต่อสหกรณ์">
+        <i class="fas fa-phone-alt"></i>
+    </a>
+
+    <!-- Popup: Not Found -->
+    <div class="popup-overlay" id="notFoundPopup">
+        <div class="popup-box">
+            <i class="fas fa-search"></i>
+            <h3>ไม่พบข้อมูล</h3>
+            <p>ไม่พบข้อมูลที่ต้องการค้นหา<br>กรุณาติดต่อสหกรณ์ หรือทำการค้นหาใหม่อีกครั้ง</p>
+            <div class="popup-buttons">
+                <a href="tel:077580142" class="popup-btn popup-btn-primary">
+                    <i class="fas fa-phone-alt"></i> ติดต่อสหกรณ์
+                </a>
+                <button class="popup-btn popup-btn-secondary" id="closeNotFoundPopup">
+                    <i class="fas fa-redo"></i> ค้นหาใหม่
+                </button>
+            </div>
         </div>
-        <p style="margin-top: 15px; color: #a0aec0; font-size: 0.8rem;">
-            © 2026 สหกรณ์ออมทรัพย์ครูชุมพร จำกัด | ข้อมูลล่าสุด 28 กันยายน 2566
-        </p>
     </div>
 
     <script>
@@ -616,148 +881,242 @@
         // CONFIGURATION
         // ============================================
         const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzLAE5A7_LEXNLIUULFDreFwCew3vb4yuKAC9k7WMIJWYjlTjGD9mRNkvKmO_rBtQpg/exec';
-        
-        // Counter for image file names
+        const ELECTION_DATE = new Date('November 28, 2026 00:00:00').getTime();
         let imageCounter = 1;
 
-        // ============================================
-        // DOM ELEMENTS
-        // ============================================
-        const elements = {
-            form: document.getElementById('searchForm'),
-            memberId: document.getElementById('memberId'),
-            birthDate: document.getElementById('birthDate'),
-            submitBtn: document.getElementById('submitBtn'),
-            statusMessage: document.getElementById('statusMessage'),
-            resultSection: document.getElementById('resultSection')
-        };
-
-        // ============================================
-        // INITIALIZATION
-        // ============================================
-        function init() {
-            // Event Listeners
-            elements.form.addEventListener('submit', handleSubmit);
-            elements.memberId.addEventListener('input', handleMemberIdInput);
-            elements.birthDate.addEventListener('input', handleBirthDateInput);
-            document.getElementById('resetBtn').addEventListener('click', resetSearch);
-            document.getElementById('printBtn').addEventListener('click', printResult);
-            document.getElementById('saveImageBtn').addEventListener('click', saveAsImage);
-            
-            // Keyboard shortcut
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Enter' && !e.shiftKey) {
-                    if (document.activeElement === elements.memberId || 
-                        document.activeElement === elements.birthDate) {
-                        e.preventDefault();
-                        elements.form.dispatchEvent(new Event('submit'));
-                    }
-                }
-            });
-            
-            // Set initial focus
-            elements.memberId.focus();
+        // คำนวณปี พ.ศ. ปัจจุบัน
+        function getCurrentBuddhistYear() {
+            const now = new Date();
+            return now.getFullYear() + 543;
         }
 
         // ============================================
-        // INPUT HANDLERS
+        // THEME TOGGLE
         // ============================================
-        function handleMemberIdInput(e) {
-            this.value = this.value.replace(/\D/g, '').slice(0, 5);
-            hideStatus();
-            hideResult();
-        }
+        const themeToggle = document.getElementById('themeToggle');
+        themeToggle.addEventListener('click', () => {
+            const current = document.documentElement.getAttribute('data-theme');
+            const next = current === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
 
-        function handleBirthDateInput(e) {
-            let val = this.value.replace(/\D/g, '').slice(0, 8);
-            let formatted = '';
-            
-            if (val.length > 4) {
-                formatted = val.slice(0, 2) + '/' + val.slice(2, 4) + '/' + val.slice(4);
-            } else if (val.length > 2) {
-                formatted = val.slice(0, 2) + '/' + val.slice(2);
+            if (next === 'dark') {
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i> ธีมสว่าง';
             } else {
-                formatted = val;
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i> ธีมมืด';
             }
-            
-            this.value = formatted;
-            hideStatus();
-            hideResult();
+        });
+
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        if (savedTheme === 'dark') {
+            themeToggle.innerHTML = '<i class="fas fa-sun"></i> ธีมสว่าง';
+        }
+
+        // ============================================
+        // FONT SIZE ADJUSTMENT
+        // ============================================
+        let fontSize = parseInt(localStorage.getItem('fontSize')) || 16;
+
+        function applyFontSize() {
+            document.documentElement.style.fontSize = fontSize + 'px';
+            localStorage.setItem('fontSize', fontSize);
+        }
+
+        document.getElementById('fontIncrease').addEventListener('click', () => {
+            if (fontSize < 22) { fontSize += 1; applyFontSize(); }
+        });
+
+        document.getElementById('fontDecrease').addEventListener('click', () => {
+            if (fontSize > 13) { fontSize -= 1; applyFontSize(); }
+        });
+
+        applyFontSize();
+
+        // ============================================
+        // COUNTDOWN TIMER
+        // ============================================
+        const timer = setInterval(() => {
+            const now = new Date().getTime();
+            const diff = ELECTION_DATE - now;
+
+            if (diff < 0) {
+                clearInterval(timer);
+                document.getElementById('countdownTimer').innerHTML = '<div style="text-align:center; width:100%; color:var(--success); font-weight:600;">ถึงวันเลือกตั้งแล้ว</div>';
+                document.getElementById('electionBanner').classList.add('show');
+                return;
+            }
+
+            document.getElementById('days').textContent = Math.floor(diff / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
+            document.getElementById('hours').textContent = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
+            document.getElementById('minutes').textContent = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+            document.getElementById('seconds').textContent = Math.floor((diff % (1000 * 60)) / 1000).toString().padStart(2, '0');
+        }, 1000);
+
+        // ============================================
+        // INPUT FORMATTING
+        // ============================================
+        const memberIdInput = document.getElementById('memberId');
+        const birthDateInput = document.getElementById('birthDate');
+
+        birthDateInput.addEventListener('input', function() {
+            let val = this.value.replace(/\D/g, '').slice(0, 8);
+            if (val.length > 4) {
+                this.value = val.slice(0, 2) + '/' + val.slice(2, 4) + '/' + val.slice(4);
+            } else if (val.length > 2) {
+                this.value = val.slice(0, 2) + '/' + val.slice(2);
+            } else {
+                this.value = val;
+            }
+        });
+
+        memberIdInput.addEventListener('input', function() {
+            this.value = this.value.replace(/\D/g, '').slice(0, 5);
+        });
+
+        // ============================================
+        // VALIDATION FUNCTIONS
+        // ============================================
+        function validateMemberId(id) {
+            return /^\d{5}$/.test(id);
+        }
+
+        function validateBirthDate(dateStr) {
+            if (!/^\d{2}\/\d{2}\/\d{4}$/.test(dateStr)) {
+                return false;
+            }
+
+            const [dayStr, monthStr, yearStr] = dateStr.split('/');
+            const day = parseInt(dayStr, 10);
+            const month = parseInt(monthStr, 10);
+            const year = parseInt(yearStr, 10);
+
+            const currentYear = getCurrentBuddhistYear();
+
+            if (day < 1 || day > 31) return false;
+            if (month < 1 || month > 12) return false;
+            if (year < 1 || year > currentYear) return false;
+
+            return true;
+        }
+
+        function markInvalid(input) {
+            input.classList.add('error');
+            input.addEventListener('input', function handler() {
+                input.classList.remove('error');
+                input.removeEventListener('input', handler);
+            }, { once: true });
+        }
+
+        // ============================================
+        // POPUP: NOT FOUND
+        // ============================================
+        function showNotFoundPopup() {
+            document.getElementById('notFoundPopup').classList.add('show');
+        }
+
+        function hideNotFoundPopup() {
+            document.getElementById('notFoundPopup').classList.remove('show');
+        }
+
+        document.getElementById('closeNotFoundPopup').addEventListener('click', () => {
+            hideNotFoundPopup();
+            resetForm();
+        });
+
+        // ============================================
+        // RESET FORM
+        // ============================================
+        function resetForm() {
+            document.getElementById('searchForm').reset();
+            document.getElementById('resultSection').style.display = 'none';
+            document.getElementById('statusMessage').style.display = 'none';
+            document.getElementById('skeletonLoader').classList.remove('show');
+            memberIdInput.classList.remove('error');
+            birthDateInput.classList.remove('error');
+            imageCounter = 1;
+
+            const badge = document.getElementById('statusBadge');
+            badge.textContent = 'สิทธิสมบูรณ์';
+            badge.className = 'badge-status badge-success';
+            document.getElementById('rowSeq').style.display = '';
+            document.getElementById('rowPlace').style.display = '';
+
+            memberIdInput.focus();
         }
 
         // ============================================
         // FORM SUBMISSION
         // ============================================
-        async function handleSubmit(e) {
+        document.getElementById('searchForm').addEventListener('submit', async function(e) {
             e.preventDefault();
-            
-            const idVal = elements.memberId.value.trim();
-            const dateVal = elements.birthDate.value.trim();
 
-            // Validation
-            if (!validateInputs(idVal, dateVal)) return;
+            const id = memberIdInput.value.trim();
+            const date = birthDateInput.value.trim();
 
-            // Disable submit button and show loading
-            elements.submitBtn.disabled = true;
-            elements.submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> กำลังตรวจสอบ...';
-            
-            // Perform search
-            await performSearch(idVal, dateVal);
-            
-            // Re-enable submit button
-            elements.submitBtn.disabled = false;
-            elements.submitBtn.innerHTML = '<i class="fas fa-search"></i> ตรวจสอบสิทธิ์';
-        }
+            let hasError = false;
 
-        // ============================================
-        // SEARCH LOGIC
-        // ============================================
-        async function performSearch(id, date) {
-            showStatus('กำลังตรวจสอบข้อมูลในระบบ...', 'loading');
-            hideResult();
+            if (!validateMemberId(id)) {
+                markInvalid(memberIdInput);
+                hasError = true;
+            }
+
+            if (!validateBirthDate(date)) {
+                markInvalid(birthDateInput);
+                hasError = true;
+            }
+
+            if (hasError) {
+                showStatus('ระบุข้อมูลไม่ถูกต้อง กรุณาระบุใหม่', 'error');
+                return;
+            }
+
+            const btn = document.getElementById('submitBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> กำลังตรวจสอบ...';
+
+            document.getElementById('resultSection').style.display = 'none';
+            document.getElementById('statusMessage').style.display = 'none';
+            document.getElementById('skeletonLoader').classList.add('show');
 
             try {
-                const response = await fetchWithJsonp(id, date);
-                
+                const response = await fetchJsonp(id, date);
+                document.getElementById('skeletonLoader').classList.remove('show');
+
                 if (response && response.success) {
-                    // Show result
                     showResult(response.data);
-                    showStatus('ค้นหาข้อมูลสำเร็จ!', 'success');
+                    showStatus('ค้นหาข้อมูลสำเร็จ', 'success');
                 } else {
-                    showStatus(response?.message || 'ไม่พบข้อมูลในระบบ', 'error');
+                    showNotFoundPopup();
                 }
-            } catch (error) {
-                console.error('Search error:', error);
+            } catch (err) {
+                document.getElementById('skeletonLoader').classList.remove('show');
+                console.error(err);
                 showStatus('เกิดข้อผิดพลาดในการเชื่อมต่อ', 'error');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-search"></i> ตรวจสอบสิทธิ์';
             }
-        }
+        });
 
         // ============================================
         // JSONP FETCH
         // ============================================
-        function fetchWithJsonp(id, date) {
+        function fetchJsonp(id, date) {
             return new Promise((resolve) => {
-                const callbackName = `callback_${Date.now()}`;
+                const cb = 'cb_' + Date.now();
                 const script = document.createElement('script');
+                script.src = `${WEB_APP_URL}?q=${encodeURIComponent(id)}&birthDate=${encodeURIComponent(date)}&callback=${cb}&_=${Date.now()}`;
                 
-                const params = new URLSearchParams({
-                    q: id,
-                    birthDate: date,
-                    callback: callbackName,
-                    _: Date.now()
-                });
-
-                script.src = `${WEB_APP_URL}?${params}`;
-
-                window[callbackName] = function(response) {
+                window[cb] = function(res) {
                     document.head.removeChild(script);
-                    delete window[callbackName];
-                    resolve(response);
+                    delete window[cb];
+                    resolve(res);
                 };
 
                 script.onerror = function() {
                     document.head.removeChild(script);
-                    delete window[callbackName];
+                    delete window[cb];
                     resolve(null);
                 };
 
@@ -769,121 +1128,107 @@
         // RESULT DISPLAY
         // ============================================
         function showResult(data) {
-            // Update result fields (ลำดับที่ขึ้นก่อน แล้วตามด้วยทะเบียนสมาชิก)
-            document.getElementById('resSeq').textContent = data.sequence || '-';
-            document.getElementById('resId').textContent = data.memberId || '-';
-            document.getElementById('resName').textContent = data.fullName || '-';
-            document.getElementById('resUnit').textContent = data.unit || '-';
-            document.getElementById('resPlace').textContent = data.pollingPlace || '-';
-            document.getElementById('resNote').textContent = data.note || '-';
+            const seqEl = document.getElementById('resSeq');
+            const idEl = document.getElementById('resId');
+            const nameEl = document.getElementById('resName');
+            const unitEl = document.getElementById('resUnit');
+            const placeEl = document.getElementById('resPlace');
+            const noteEl = document.getElementById('resNote');
 
-            // Show result section
-            elements.resultSection.style.display = 'block';
-            
-            // Smooth scroll to result
+            seqEl.textContent = data.sequence || '-';
+            idEl.textContent = data.memberId || '-';
+            nameEl.textContent = data.fullName || '-';
+            unitEl.textContent = data.unit || '-';
+            placeEl.textContent = data.pollingPlace || '-';
+            noteEl.textContent = data.note || '-';
+
+            const badge = document.getElementById('statusBadge');
+            const rowSeq = document.getElementById('rowSeq');
+            const rowPlace = document.getElementById('rowPlace');
+
+            const hasSeq = data.sequence && data.sequence.toString().trim() !== '' && data.sequence !== '-';
+            const hasNote = data.note && data.note.toString().trim() !== '' && data.note !== '-';
+
+            if (!hasSeq && hasNote) {
+                badge.textContent = 'สิทธิไม่สมบูรณ์';
+                badge.className = 'badge-status badge-error';
+
+                rowSeq.style.display = 'none';
+                rowPlace.style.display = 'none';
+            } else {
+                badge.textContent = 'สิทธิสมบูรณ์';
+                badge.className = 'badge-status badge-success';
+
+                rowSeq.style.display = '';
+                rowPlace.style.display = '';
+            }
+
+            document.getElementById('resultSection').style.display = 'block';
             setTimeout(() => {
-                elements.resultSection.scrollIntoView({ 
-                    behavior: 'smooth',
-                    block: 'start'
-                });
+                document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
             }, 100);
         }
 
+        function showStatus(msg, type) {
+            const el = document.getElementById('statusMessage');
+            el.textContent = msg;
+            el.className = 'status-message status-' + type;
+        }
+
         // ============================================
-        // UTILITY FUNCTIONS
+        // ACTION BUTTONS
         // ============================================
-        function validateInputs(id, date) {
-            if (id.length !== 5) {
-                showStatus('กรุณากรอกเลขทะเบียนให้ครบ 5 หลัก', 'error');
-                elements.memberId.focus();
-                return false;
-            }
+        document.getElementById('resetBtn').addEventListener('click', resetForm);
 
-            if (date.length !== 10) {
-                showStatus('กรุณากรอกวันเกิดให้ครบ 8 หลัก', 'error');
-                elements.birthDate.focus();
-                return false;
-            }
-
-            return true;
-        }
-
-        function resetSearch() {
-            elements.memberId.value = '';
-            elements.birthDate.value = '';
-            hideResult();
-            hideStatus();
-            elements.memberId.focus();
-            
-            // Reset image counter
-            imageCounter = 1;
-        }
-
-        function printResult() {
-            window.print();
-        }
-
-        function saveAsImage() {
-            const element = document.getElementById('printableArea');
-            const saveBtn = document.getElementById('saveImageBtn');
-            const originalText = saveBtn.innerHTML;
+        document.getElementById('saveImageBtn').addEventListener('click', function() {
             const memberId = document.getElementById('resId').textContent;
-            
-            saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> กำลังบันทึก...';
-            saveBtn.disabled = true;
-            
-            html2canvas(element, { 
+            const btn = document.getElementById('saveImageBtn');
+            const originalText = btn.innerHTML;
+
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> กำลังบันทึก...';
+            btn.disabled = true;
+
+            // บันทึกทั้งกล่องผลลัพธ์ รวมหัวข้อ + Badge
+            html2canvas(document.getElementById('captureArea'), { 
+                scale: 2, 
                 backgroundColor: '#ffffff',
-                scale: 2,
                 useCORS: true,
                 logging: false
             }).then(canvas => {
                 const link = document.createElement('a');
-                
-                // Format file name: ข้อมูลที่ลงคะแนน_13750_000001
-                const counterStr = imageCounter.toString().padStart(6, '0');
-                const fileName = `ข้อมูลที่ลงคะแนน_${memberId}_${counterStr}.png`;
-                link.download = fileName;
+                link.download = `ข้อมูลสิทธิเลือกตั้ง_${memberId}_${String(imageCounter).padStart(6, '0')}.png`;
                 link.href = canvas.toDataURL();
                 link.click();
-                
-                // Increment counter for next image
                 imageCounter++;
-                
-                saveBtn.innerHTML = originalText;
-                saveBtn.disabled = false;
-                showStatus('บันทึกรูปภาพสำเร็จ: ' + fileName, 'success');
-            }).catch((error) => {
-                console.error('Error saving image:', error);
-                saveBtn.innerHTML = originalText;
-                saveBtn.disabled = false;
+
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                showStatus('บันทึกรูปภาพสำเร็จ', 'success');
+            }).catch(err => {
+                console.error(err);
+                btn.innerHTML = originalText;
+                btn.disabled = false;
                 showStatus('บันทึกรูปภาพไม่สำเร็จ', 'error');
             });
-        }
-
-        function showStatus(message, type) {
-            elements.statusMessage.textContent = message;
-            elements.statusMessage.className = `status-message status-${type}`;
-            
-            // Auto-hide non-error messages
-            if (type !== 'error') {
-                setTimeout(hideStatus, 3000);
-            }
-        }
-
-        function hideStatus() {
-            elements.statusMessage.textContent = '';
-            elements.statusMessage.className = 'status-message';
-        }
-
-        function hideResult() {
-            elements.resultSection.style.display = 'none';
-        }
+        });
 
         // ============================================
-        // INITIALIZE SYSTEM
+        // FAQ ACCORDION
         // ============================================
-        document.addEventListener('DOMContentLoaded', init);
+        document.querySelectorAll('.faq-question').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const answer = btn.nextElementSibling;
+                const isOpen = answer.classList.contains('open');
+
+                document.querySelectorAll('.faq-answer').forEach(a => a.classList.remove('open'));
+                document.querySelectorAll('.faq-question').forEach(q => q.classList.remove('active'));
+
+                if (!isOpen) {
+                    answer.classList.add('open');
+                    btn.classList.add('active');
+                }
+            });
+        });
     </script>
 </body>
 </html>
