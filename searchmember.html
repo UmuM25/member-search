@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ระบบตรวจสอบสมาชิก | สหกรณ์ออมทรัพย์ครูชุมพร จำกัด</title>
+    <title>ระบบตรวจสอบสมาชิกผู้มีสิทธิลงคะแนนสรรหา | สหกรณ์ออมทรัพย์ครูชุมพร จำกัด</title>
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -12,7 +12,6 @@
             --primary: #1e3a8a;
             --primary-light: #3b82f6;
             --accent: #f59e0b;
-            --accent-gradient: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
             --bg-gradient: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
             --text-dark: #1e293b;
             --text-light: #64748b;
@@ -38,7 +37,6 @@
             flex-direction: column;
         }
 
-        /* Top Navigation Bar */
         .top-bar {
             background: var(--primary-dark);
             color: white;
@@ -70,7 +68,6 @@
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 
-        /* Main Container */
         .container {
             max-width: 750px;
             margin: auto;
@@ -78,7 +75,6 @@
             width: 100%;
         }
 
-        /* Header */
         .page-header {
             text-align: center;
             margin-bottom: 25px;
@@ -86,8 +82,6 @@
             background: white;
             border-radius: var(--radius);
             box-shadow: var(--card-shadow);
-            position: relative;
-            overflow: hidden;
             border-top: 4px solid var(--primary-light);
         }
 
@@ -105,7 +99,6 @@
             margin: 0 auto;
         }
 
-        /* ===== COUNTDOWN TIMER ===== */
         .countdown-container {
             background: linear-gradient(135deg, #1e3a8a 0%, #1e1b4b 100%);
             color: white;
@@ -161,7 +154,6 @@
             color: #cbd5e1;
         }
 
-        /* ===== CHECKLIST ===== */
         .guideline-card {
             background: white;
             border-radius: var(--radius);
@@ -181,9 +173,7 @@
             gap: 10px;
         }
 
-        .guideline-title i {
-            color: var(--accent);
-        }
+        .guideline-title i { color: var(--accent); }
 
         .guideline-list {
             list-style: none;
@@ -199,12 +189,8 @@
             color: var(--text-dark);
         }
 
-        .guideline-item i {
-            color: var(--success);
-            margin-top: 4px;
-        }
+        .guideline-item i { color: var(--success); margin-top: 4px; }
 
-        /* Form Section */
         .form-section {
             background: white;
             border-radius: var(--radius);
@@ -222,16 +208,8 @@
             border-bottom: 2px solid #f1f5f9;
         }
 
-        .section-title i {
-            color: var(--primary-light);
-            font-size: 1.2rem;
-        }
-
-        .section-title h2 {
-            color: var(--primary-dark);
-            font-size: 1.2rem;
-            font-weight: 600;
-        }
+        .section-title i { color: var(--primary-light); font-size: 1.2rem; }
+        .section-title h2 { color: var(--primary-dark); font-size: 1.2rem; font-weight: 600; }
 
         .form-grid {
             display: grid;
@@ -240,9 +218,7 @@
             margin-bottom: 20px;
         }
 
-        .form-group {
-            margin-bottom: 15px;
-        }
+        .form-group { margin-bottom: 15px; }
 
         .form-label {
             display: block;
@@ -280,7 +256,6 @@
             gap: 5px;
         }
 
-        /* Button */
         .btn {
             display: inline-flex;
             align-items: center;
@@ -314,12 +289,8 @@
             flex: 1;
         }
 
-        .btn-secondary:hover {
-            background: #f8fafc;
-            border-color: var(--primary-light);
-        }
+        .btn-secondary:hover { background: #f8fafc; border-color: var(--primary-light); }
 
-        /* Status Messages */
         .status-message {
             padding: 12px 16px;
             border-radius: 10px;
@@ -333,7 +304,6 @@
         .status-success { background: #d1fae5; color: #065f46; border: 1px solid #6ee7b7; display: block; }
         .status-loading { background: #dbeafe; color: var(--primary); border: 1px solid #bfdbfe; display: block; }
 
-        /* ===== VIEW 2: หน้าจอผลลัพธ์แบบพอดีจออัตโนมัติ ===== */
         .result-page {
             display: none;
             position: fixed;
@@ -349,10 +319,7 @@
             animation: fadeIn 0.3s ease;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         .result-card {
             background: white;
@@ -362,12 +329,6 @@
             max-width: 500px;
             overflow: hidden;
             border: 1px solid rgba(255,255,255,0.2);
-            animation: slideUp 0.3s ease;
-        }
-
-        @keyframes slideUp {
-            from { transform: translateY(20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
         }
 
         .result-header {
@@ -381,9 +342,7 @@
             font-weight: 600;
         }
 
-        .result-content {
-            padding: 20px;
-        }
+        .result-content { padding: 20px; }
 
         .result-table {
             width: 100%;
@@ -391,13 +350,8 @@
             margin-bottom: 15px;
         }
 
-        .result-table tr {
-            border-bottom: 1px solid #f1f5f9;
-        }
-
-        .result-table tr:last-child {
-            border-bottom: none;
-        }
+        .result-table tr { border-bottom: 1px solid #f1f5f9; }
+        .result-table tr:last-child { border-bottom: none; }
 
         .result-table td {
             padding: 10px 8px;
@@ -425,15 +379,8 @@
             font-weight: 600;
         }
 
-        .num-format {
-            font-family: 'Courier New', monospace;
-            letter-spacing: 0.5px;
-        }
-
-        .note-alert {
-            color: var(--error) !important;
-            font-weight: 700 !important;
-        }
+        .num-format { font-family: 'Courier New', monospace; letter-spacing: 0.5px; }
+        .note-alert { color: var(--error) !important; font-weight: 700 !important; }
 
         .slip-footer {
             padding: 12px;
@@ -446,9 +393,7 @@
             margin-bottom: 15px;
         }
 
-        .slip-footer p {
-            margin-bottom: 3px;
-        }
+        .slip-footer p { margin-bottom: 3px; }
 
         .result-actions {
             display: flex;
@@ -456,11 +401,7 @@
             padding: 0 20px 20px 20px;
         }
 
-        .result-actions .btn {
-            flex: 1;
-            padding: 12px;
-            font-size: 0.95rem;
-        }
+        .result-actions .btn { flex: 1; padding: 12px; font-size: 0.95rem; }
 
         .mobile-notice {
             background: #fffbeb;
@@ -475,10 +416,7 @@
             display: none;
         }
 
-        .mobile-notice i {
-            color: #d97706;
-            margin-right: 6px;
-        }
+        .mobile-notice i { color: #d97706; margin-right: 6px; }
 
         .footer {
             text-align: center;
@@ -491,34 +429,24 @@
             box-shadow: var(--card-shadow);
         }
 
-        /* Responsive Rules */
         @media (hover: none) and (pointer: coarse), (max-width: 768px) {
-            #printBtn {
-                display: none !important;
-            }
-            .mobile-notice {
-                display: block !important;
-            }
+            #printBtn { display: none !important; }
+            .mobile-notice { display: block !important; }
         }
 
-        /* ===== Print Style สำหรับคอมพิวเตอร์ (ชิดด้านบน, ขอบซ้ายขวา 1.5 ซม.) ===== */
+        /* ===== PRINT STYLE: จัดกึ่งกลางซ้าย-ขวา และเว้นขอบบน 1.5 ซม. พอดีเป๊ะ ===== */
         @media print {
-            @page {
-                size: auto;
-                margin: 0mm;
-            }
             body * {
                 visibility: hidden !important;
             }
-            .result-card, .result-card * {
+            #resultPage, #resultPage * {
                 visibility: visible !important;
             }
-            .result-page {
+            #resultPage {
                 position: absolute !important;
                 left: 0 !important;
                 top: 0 !important;
-                width: 100vw !important;
-                height: 100vh !important;
+                width: 100% !important;
                 background: white !important;
                 display: block !important;
                 padding: 0 !important;
@@ -526,12 +454,12 @@
             .result-card {
                 position: absolute !important;
                 left: 50% !important;
-                top: 1cm !important;
-                transform: translateX(-50%) !important;
+                top: 1.5cm !important; /* ระยะห่างจากขอบด้านบนลงมา 1.5 ซม. */
+                transform: translateX(-50%) !important; /* จัดกึ่งกลางแนวนอน ซ้าย-ขวา */
                 box-shadow: none !important;
                 border: 1px solid #cbd5e1 !important;
-                width: calc(100% - 3cm) !important;
-                max-width: 14cm !important;
+                width: 14cm !important;
+                margin: 0 !important;
             }
             .result-actions, .mobile-notice {
                 display: none !important;
@@ -540,25 +468,22 @@
     </style>
 </head>
 <body>
-    <!-- Top Navigation -->
     <div class="top-bar">
         <div class="logo">
-            <img src="https://www.chumphonteacher.com/images/logo.png" alt="โลโก้สหกรณ์" onerror="this.src='https://via.placeholder.com/40'">
+            <img src="https://i.ibb.co/8LhJvtz8/logo.png" alt="โลโก้สหกรณ์" onerror="this.src='https://via.placeholder.com/40'">
             <span>สหกรณ์ออมทรัพย์ครูชุมพร จำกัด</span>
         </div>
     </div>
 
-    <!-- VIEW 1: หน้าฟอร์มค้นหาปกติ -->
     <div class="container" id="searchView">
         <div class="page-header">
-            <h1>ระบบตรวจสอบสิทธิลงคะแนน</h1>
-            <p>สรรหาผู้แทนสมาชิก ประจำปี พ.ศ. 2569</p>
+            <h1>ระบบตรวจสอบสมาชิกผู้มีสิทธิลงคะแนนสรรหา</h1>
+            <p>สหกรณ์ออมทรัพย์ครูชุมพร จำกัด ประจำปีบัญชี พ.ศ. 2570</p>
         </div>
 
-        <!-- นับเวลาถอยหลัง -->
         <div class="countdown-container">
             <div class="countdown-title">
-                <i class="fas fa-clock"></i> นับถอยหลังวันลงคะแนน <span class="highlight-date">28 พ.ย. 2569</span>
+                <i class="fas fa-clock"></i> วันลงคะแนนสรรหา <span class="highlight-date">28 พ.ย. 2569</span>
             </div>
             <div class="countdown-grid">
                 <div class="countdown-box">
@@ -580,7 +505,6 @@
             </div>
         </div>
 
-        <!-- สิ่งที่ต้องเตรียม -->
         <div class="guideline-card">
             <div class="guideline-title">
                 <i class="fas fa-exclamation-circle"></i> สิ่งที่ต้องเตรียมไปในวันลงคะแนน
@@ -597,7 +521,6 @@
             </ul>
         </div>
 
-        <!-- ฟอร์มค้นหา -->
         <div class="form-section">
             <div class="section-title">
                 <i class="fas fa-search-dollar"></i>
@@ -624,7 +547,7 @@
                         </label>
                         <input type="text" id="birthDate" class="form-control"
                                maxlength="10" inputmode="numeric"
-                               placeholder="เช่น 25/07/2527" required>
+                               placeholder="เช่น 01/01/2500" required>
                         <div class="form-hint">
                             <i class="fas fa-info-circle"></i> กรอกวันเกิด 8 หลัก ระบบเติม / ให้อัตโนมัติ
                         </div>
@@ -640,11 +563,12 @@
         </div>
 
         <div class="footer">
-            <p>สหกรณ์ออมทรัพย์ครูชุมพร จำกัด | 77 หมู่ 4 ตำบลบางหมาก อำเภอเมือง จังหวัดชุมพร 86000</p>
+            <p>สหกรณ์ออมทรัพย์ครูชุมพร จำกัด | 19/3 หมู่ 4 ตำบลวังไผ่ อำเภอเมือง จังหวัดชุมพร 86000</p>
+            <p>ติดต่อสอบถาม โทรศัพท์ : 077-596-762-3 และ 077-596-673-4</p>
+            <p>Dev. by : UmuM@25</p>
         </div>
     </div>
 
-    <!-- VIEW 2: หน้าจอผลลัพธ์ -->
     <div class="result-page" id="resultPage">
         <div class="result-card">
             <div class="result-header">
@@ -685,7 +609,8 @@
 
                 <div class="slip-footer">
                     <p><strong>สหกรณ์ออมทรัพย์ครูชุมพร จำกัด</strong></p>
-                    <p>77 หมู่ 4 ตำบลบางหมาก อำเภอเมือง จ.ชุมพร 86000</p>
+                    <p>19/3 หมู่ 4 ตำบลวังไผ่ อำเภอเมือง จ.ชุมพร 86000</p>
+                    <p>ติดต่อ : 077-596-762-3 และ 077-596-673-4</p>
                     <p>วันที่ตรวจสอบ: <span id="slipDate">-</span></p>
                 </div>
             </div>
@@ -714,7 +639,7 @@
             resultPage: document.getElementById('resultPage')
         };
 
-        const electionDate = new Date('2026-11-28T08:30:00').getTime();
+        const electionDate = new Date('2026-11-28T08:00:00').getTime();
 
         function updateCountdown() {
             const now = new Date().getTime();
@@ -749,7 +674,6 @@
             
             document.getElementById('backToSearchBtn').addEventListener('click', resetToSearchView);
             
-            // แก้ไขปุ่มพิมพ์ให้เรียกคำสั่ง window.print() โดยตรงอย่างมั่นใจ
             document.getElementById('printBtn').addEventListener('click', function() {
                 window.print();
             });
