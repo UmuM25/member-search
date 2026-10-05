@@ -20,7 +20,6 @@
             --radius: 8px;
             --success: #38a169;
             --error: #e53e3e;
-            --warning: #dd6b20;
         }
 
         * {
@@ -38,95 +37,6 @@
             overflow-x: hidden;
         }
 
-        /* ===== POPUP: เปิดในเบราว์เซอร์ภายนอก ===== */
-        .inapp-popup {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.75);
-            z-index: 100000;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .inapp-popup__box {
-            background: white;
-            border-radius: 16px;
-            max-width: 420px;
-            width: 100%;
-            padding: 28px;
-            text-align: center;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-        }
-
-        .inapp-popup__box h3 {
-            color: var(--primary-dark);
-            margin-bottom: 12px;
-            font-size: 1.3rem;
-        }
-
-        .inapp-popup__box p {
-            color: var(--secondary);
-            margin-bottom: 20px;
-            line-height: 1.6;
-        }
-
-        .inapp-popup__actions {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .inapp-popup__feedback {
-            margin-top: 12px;
-            color: var(--success);
-            font-weight: 500;
-            display: none;
-        }
-
-        /* ===== POPUP: Preview รูปภาพจาก GAS ===== */
-        .preview-modal {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.9);
-            z-index: 100001;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            flex-direction: column;
-        }
-
-        .preview-modal__box {
-            background: white;
-            border-radius: 16px;
-            max-width: 460px;
-            width: 100%;
-            padding: 24px;
-            text-align: center;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-        }
-
-        .preview-modal__box h3 {
-            color: var(--primary-dark);
-            font-size: 1.15rem;
-            margin-bottom: 6px;
-        }
-
-        .preview-modal__box p {
-            color: var(--text-light);
-            font-size: 0.9rem;
-            margin-bottom: 16px;
-        }
-
-        .preview-modal__box img {
-            max-width: 100%;
-            border-radius: 12px;
-            margin: 12px 0;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-
         /* Top Navigation Bar */
         .top-bar {
             background: linear-gradient(90deg, var(--primary-dark), var(--primary));
@@ -136,8 +46,6 @@
             justify-content: space-between;
             align-items: center;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            position: relative;
-            z-index: 100;
         }
 
         .top-bar .logo {
@@ -151,26 +59,6 @@
         .top-bar .logo i {
             color: var(--accent);
             font-size: 1.5rem;
-        }
-
-        .system-status {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 0.85rem;
-        }
-
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--success);
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
         }
 
         /* Main Container */
@@ -189,19 +77,6 @@
             border-radius: var(--radius);
             box-shadow: var(--shadow);
             border-left: 5px solid var(--accent);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .page-header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 100px;
-            height: 100px;
-            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), transparent);
-            border-radius: 0 0 0 100%;
         }
 
         .page-header h1 {
@@ -223,19 +98,12 @@
             box-shadow: var(--shadow);
             padding: 30px;
             margin-bottom: 25px;
-            position: relative;
-            transition: transform 0.3s ease;
-        }
-
-        .form-section:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
 
         .section-title {
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            gap: 10px;
             margin-bottom: 25px;
             padding-bottom: 15px;
             border-bottom: 2px solid var(--border-color);
@@ -252,7 +120,6 @@
             font-weight: 600;
         }
 
-        /* Form Grid */
         .form-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -262,7 +129,6 @@
 
         .form-group {
             margin-bottom: 20px;
-            position: relative;
         }
 
         .form-label {
@@ -270,7 +136,6 @@
             margin-bottom: 8px;
             font-weight: 500;
             color: var(--text-dark);
-            font-size: 0.95rem;
         }
 
         .form-control {
@@ -278,11 +143,9 @@
             padding: 14px 15px;
             border: 1px solid var(--border-color);
             border-radius: 6px;
-            font-size: 1rem;
-            transition: all 0.3s;
+            font-size: 1.1rem;
             background: var(--light-gray);
             font-family: 'Courier New', monospace;
-            font-size: 1.1rem;
             letter-spacing: 1px;
         }
 
@@ -315,26 +178,16 @@
             border: none;
             cursor: pointer;
             transition: all 0.3s;
-            min-width: 150px;
         }
 
         .btn-primary {
             background: linear-gradient(135deg, var(--primary), #3c6ea8);
             color: white;
-            border: 1px solid var(--primary);
         }
 
         .btn-primary:hover {
             background: linear-gradient(135deg, var(--primary-dark), var(--primary));
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        }
-
-        .btn-primary:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
         }
 
         .btn-secondary {
@@ -347,16 +200,6 @@
             background: var(--light-gray);
         }
 
-        .btn-success {
-            background: linear-gradient(135deg, var(--success), #48bb78);
-            color: white;
-            border: 1px solid var(--success);
-        }
-
-        .btn-success:hover {
-            background: linear-gradient(135deg, #2f855a, var(--success));
-        }
-
         /* Status Messages */
         .status-message {
             padding: 15px;
@@ -364,42 +207,13 @@
             margin: 20px 0;
             font-weight: 500;
             display: none;
-            animation: slideIn 0.3s ease;
         }
 
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+        .status-error { background: #fff5f5; color: var(--error); border: 1px solid #fc8181; display: block; }
+        .status-success { background: #f0fff4; color: #276749; border: 1px solid #9ae6b4; display: block; }
+        .status-loading { background: #ebf8ff; color: var(--primary); border: 1px solid #90cdf4; display: block; }
 
-        .status-error {
-            background: linear-gradient(135deg, #fff5f5, #fed7d7);
-            color: var(--error);
-            border: 1px solid #fc8181;
-            display: block;
-        }
-
-        .status-success {
-            background: linear-gradient(135deg, #f0fff4, #c6f6d5);
-            color: #276749;
-            border: 1px solid #9ae6b4;
-            display: block;
-        }
-
-        .status-loading {
-            background: linear-gradient(135deg, #ebf8ff, #bee3f8);
-            color: var(--primary);
-            border: 1px solid #90cdf4;
-            display: block;
-        }
-
-        /* Result Section */
+        /* ===== RESULT SECTION: ควบคุมขนาดไม่เกินครึ่ง A4 สำหรับพิมพ์ ===== */
         .result-section {
             background: white;
             border-radius: var(--radius);
@@ -407,25 +221,16 @@
             margin-top: 25px;
             display: none;
             overflow: hidden;
-            animation: fadeIn 0.5s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            max-width: 650px; /* จำกัดความกว้างไม่เกินครึ่ง A4 */
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .result-header {
             background: linear-gradient(90deg, var(--primary-dark), var(--primary));
             color: white;
-            padding: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .result-header h3 {
-            font-size: 1.2rem;
+            padding: 18px 20px;
+            font-size: 1.1rem;
             display: flex;
             align-items: center;
             gap: 10px;
@@ -435,20 +240,14 @@
             padding: 25px;
         }
 
-        /* Result Table */
         .result-table {
             width: 100%;
             border-collapse: collapse;
-            margin: 20px 0;
+            margin: 10px 0 20px 0;
         }
 
         .result-table tr {
             border-bottom: 1px solid var(--border-color);
-            transition: background-color 0.2s;
-        }
-
-        .result-table tr:hover {
-            background-color: rgba(45, 82, 136, 0.02);
         }
 
         .result-table tr:last-child {
@@ -456,22 +255,22 @@
         }
 
         .result-table td {
-            padding: 16px 10px;
+            padding: 14px 10px;
             vertical-align: top;
+            font-size: 1rem;
         }
 
         .result-table td:first-child {
             width: 35%;
             color: var(--secondary);
             font-weight: 500;
-            padding-right: 20px;
             position: relative;
         }
 
         .result-table td:first-child::after {
             content: ':';
             position: absolute;
-            right: 10px;
+            right: 15px;
             color: var(--text-light);
         }
 
@@ -479,17 +278,50 @@
             width: 65%;
             color: var(--text-dark);
             font-weight: 500;
-            font-family: 'Noto Sans Thai', sans-serif;
         }
 
-        /* Action Buttons */
-        .action-buttons {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
+        /* Slip Footer */
+        .slip-footer {
+            padding: 15px 0 5px 0;
+            text-align: center;
+            border-top: 1px dashed var(--border-color);
+            color: var(--text-light);
+            font-size: 0.85rem;
+            background: #fafafa;
+            margin-top: 15px;
+        }
+
+        .slip-footer p {
+            margin-bottom: 4px;
+        }
+
+        /* Action Buttons & Mobile Notice */
+        .action-area {
             padding: 20px;
-            border-top: 1px solid var(--border-color);
             background: var(--light-gray);
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* ข้อความแจ้งเตือนบนมือถือ */
+        .mobile-screenshot-notice {
+            display: none;
+            background: #fffbeb;
+            border: 1px solid #f59e0b;
+            color: #92400e;
+            padding: 14px;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: 500;
+            font-size: 0.95rem;
+            width: 100%;
+        }
+
+        .mobile-screenshot-notice i {
+            color: #d97706;
+            margin-right: 6px;
         }
 
         /* Footer */
@@ -502,125 +334,51 @@
             border-top: 1px solid var(--border-color);
             background: white;
             border-radius: var(--radius);
-            box-shadow: var(--shadow);
         }
 
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 25px;
-            margin-top: 15px;
-        }
-
-        .footer-links a {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
-        .footer-links a:hover {
-            color: var(--accent);
-            text-decoration: underline;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .top-bar .system-status {
-                display: none;
-            }
-            
-            .form-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .action-buttons {
-                grid-template-columns: 1fr;
-            }
-            
-            .btn {
-                width: 100%;
-                min-width: auto;
-            }
-            
-            .container {
-                padding: 0 15px;
-            }
-            
-            .form-section {
-                padding: 20px;
-            }
-
-            .inapp-popup__box,
-            .preview-modal__box {
-                margin: 0 10px;
-            }
-        }
-
-        /* ===== ซ่อนปุ่มพิมพ์บนมือถือ/แท็บเล็ต ===== */
-        @media (hover: none) and (pointer: coarse) {
-            #printBtn {
+        /* ===== ควบคุมการแสดงผลตามอุปกรณ์ (Responsive & Print) ===== */
+        
+        /* ถ้าเปิดผ่านมือถือหรือแท็บเล็ต ซ่อนปุ่มพิมพ์ แสดงข้อความแนะนำแคปจอ */
+        @media (hover: none) and (pointer: coarse), (max-width: 768px) {
+            #printAreaBtn {
                 display: none !important;
             }
+            .mobile-screenshot-notice {
+                display: block !important;
+            }
+            .action-area {
+                flex-direction: column;
+                gap: 12px;
+            }
+            .action-area .btn {
+                width: 100%;
+            }
         }
 
-        /* Print Styles */
+        /* ตั้งค่าสำหรับการสั่งพิมพ์ผ่านคอมพิวเตอร์ (ขนาดไม่เกินครึ่ง A4) */
         @media print {
             body * { visibility: hidden; }
             .result-section, .result-section * { visibility: visible; }
             .result-section {
                 position: absolute;
-                left: 0;
-                top: 0;
+                left: 50%;
+                top: 20px;
+                transform: translateX(-50%);
                 width: 100%;
+                max-width: 14cm; /* ขนาดความกว้างประมาณครึ่งหน้ากระดาษ A4 */
                 box-shadow: none;
-                border: 1px solid #ccc;
+                border: 1px solid #ddd;
             }
-            .action-buttons, .top-bar, .form-section, .footer { display: none; }
+            .action-area, .top-bar, .form-section, .footer { display: none; }
         }
     </style>
 </head>
 <body>
-    <!-- ===== POPUP: แจ้งให้เปิดในเบราว์เซอร์ภายนอก ===== -->
-    <div id="inAppPopup" class="inapp-popup">
-        <div class="inapp-popup__box">
-            <h3>กรุณาเปิดในเบราว์เซอร์ภายนอก</h3>
-            <p>LINE ไม่รองรับการบันทึกรูปภาพจากเว็บโดยตรง กรุณาเปิดลิงก์นี้ใน <b>Chrome หรือ Safari</b> เพื่อใช้งานให้ครบถ้วน</p>
-            <div class="inapp-popup__actions">
-                <button class="btn btn-primary" id="openBrowserBtn">
-                    <i class="fas fa-external-link-alt"></i> เปิดในเบราว์เซอร์
-                </button>
-                <button class="btn btn-secondary" id="copyLinkBtn">
-                    <i class="fas fa-copy"></i> คัดลอกลิงก์
-                </button>
-            </div>
-            <div id="copyFeedback" class="inapp-popup__feedback">
-                <i class="fas fa-check-circle"></i> คัดลอกลิงก์แล้ว กรุณาวางใน Chrome/Safari
-            </div>
-        </div>
-    </div>
-
-    <!-- ===== POPUP: Preview รูปภาพจาก GAS ===== -->
-    <div id="imagePreviewModal" class="preview-modal">
-        <div class="preview-modal__box">
-            <h3>แตะที่รูปค้างไว้ แล้วเลือก "บันทึกรูปภาพ"</h3>
-            <p>จากนั้นเลือก "บันทึกรูปภาพ" เพื่อเก็บลงอัลบั้ม</p>
-            <img id="previewImg" src="" alt="ผลการตรวจสอบ">
-            <button id="closePreviewBtn" class="btn btn-secondary">
-                <i class="fas fa-times"></i> ปิด
-            </button>
-        </div>
-    </div>
-
     <!-- Top Navigation -->
     <div class="top-bar">
         <div class="logo">
             <i class="fas fa-university"></i>
             <span>สหกรณ์ออมทรัพย์ครูชุมพร จำกัด</span>
-        </div>
-        <div class="system-status">
-            <div class="status-dot"></div>
-            <span>ระบบพร้อมใช้งาน</span>
         </div>
     </div>
 
@@ -634,10 +392,8 @@
         <!-- Search Form -->
         <div class="form-section">
             <div class="section-title">
-                <div>
-                    <i class="fas fa-user-check"></i>
-                    <h2>ตรวจสอบข้อมูลสมาชิก</h2>
-                </div>
+                <i class="fas fa-user-check"></i>
+                <h2>ตรวจสอบข้อมูลสมาชิก</h2>
             </div>
 
             <form id="searchForm">
@@ -667,68 +423,72 @@
                     </div>
                 </div>
 
-                <div class="form-group" style="text-align: center; margin-top: 25px;">
+                <div style="text-align: center; margin-top: 15px;">
                     <button type="submit" id="submitBtn" class="btn btn-primary">
                         <i class="fas fa-search"></i> ตรวจสอบสิทธิ์
                     </button>
                 </div>
             </form>
 
-            <!-- Status Messages -->
             <div id="statusMessage" class="status-message"></div>
         </div>
 
-        <!-- Result Section -->
+        <!-- Result Section (ขนาดประมาณครึ่ง A4) -->
         <div class="result-section" id="resultSection">
             <div class="result-header">
-                <h3><i class="fas fa-file-alt"></i> ผลการตรวจสอบข้อมูลสมาชิก</h3>
+                <i class="fas fa-file-alt"></i> ผลการตรวจสอบข้อมูลสมาชิก
             </div>
 
             <div class="result-content">
-                <div id="printableArea">
-                    <table class="result-table">
-                        <tr>
-                            <td>ลำดับที่</td>
-                            <td id="resSeq">-</td>
-                        </tr>
-                        <tr>
-                            <td>ทะเบียนสมาชิก</td>
-                            <td id="resId">-</td>
-                        </tr>
-                        <tr>
-                            <td>ชื่อ - นามสกุล</td>
-                            <td id="resName">-</td>
-                        </tr>
-                        <tr>
-                            <td>หน่วย</td>
-                            <td id="resUnit">-</td>
-                        </tr>
-                        <tr>
-                            <td>สถานที่ลงคะแนน</td>
-                            <td id="resPlace">-</td>
-                        </tr>
-                        <tr>
-                            <td>หมายเหตุ</td>
-                            <td id="resNote">-</td>
-                        </tr>
-                    </table>
-                </div>
+                <table class="result-table">
+                    <tr>
+                        <td>ลำดับที่</td>
+                        <td id="resSeq">-</td>
+                    </tr>
+                    <tr>
+                        <td>ทะเบียนสมาชิก</td>
+                        <td id="resId">-</td>
+                    </tr>
+                    <tr>
+                        <td>ชื่อ - นามสกุล</td>
+                        <td id="resName">-</td>
+                    </tr>
+                    <tr>
+                        <td>หน่วย</td>
+                        <td id="resUnit">-</td>
+                    </tr>
+                    <tr>
+                        <td>สถานที่ลงคะแนน</td>
+                        <td id="resPlace">-</td>
+                    </tr>
+                    <tr>
+                        <td>หมายเหตุ</td>
+                        <td id="resNote">-</td>
+                    </tr>
+                </table>
 
-                <div class="action-buttons">
-                    <button class="btn btn-secondary" id="resetBtn">
-                        <i class="fas fa-redo"></i> ตรวจสอบใหม่
-                    </button>
-                    <button class="btn btn-primary" id="printBtn">
-                        <i class="fas fa-print"></i> พิมพ์รายงาน
-                    </button>
-                    <button class="btn btn-success" id="saveImageBtn">
-                        <i class="fas fa-camera"></i> บันทึกรูปภาพ
-                    </button>
+                <div class="slip-footer">
+                    <p><strong>สหกรณ์ออมทรัพย์ครูชุมพร จำกัด</strong></p>
+                    <p>77 หมู่ 4 ตำบลบางหมาก อำเภอเมือง จังหวัดชุมพร 86000</p>
+                    <p>วันที่ตรวจสอบ: <span id="slipDate">-</span></p>
                 </div>
-                
-                <p id="saveHint" style="text-align:center; color:#718096; font-size:0.85rem; padding:15px 0 0; display:none;">
-                    <i class="fas fa-info-circle"></i> กดปุ่มด้านบน จะมีรูปปรากฏขึ้น ให้กดค้างที่รูปเพื่อบันทึก
-                </p>
+            </div>
+
+            <!-- Action Area: แยกปุ่มคอม / ข้อความมือถืออัตโนมัติ -->
+            <div class="action-area">
+                <button class="btn btn-secondary" id="resetBtn">
+                    <i class="fas fa-redo"></i> ตรวจสอบใหม่
+                </button>
+
+                <!-- ปุ่มพิมพ์เอกสาร (แสดงเฉพาะบนคอมพิวเตอร์) -->
+                <button class="btn btn-primary" id="printAreaBtn">
+                    <i class="fas fa-print"></i> พิมพ์เอกสาร
+                </button>
+
+                <!-- ข้อความเตือน (แสดงเฉพาะบนมือถือ/แท็บเล็ต) -->
+                <div class="mobile-screenshot-notice">
+                    <i class="fas fa-camera"></i> กรุณาบันทึกภาพหน้าจอไว้เพื่อความสะดวกในการตรวจสอบ
+                </div>
             </div>
         </div>
     </div>
@@ -736,28 +496,14 @@
     <!-- Footer -->
     <div class="footer">
         <p>สหกรณ์ออมทรัพย์ครูชุมพร จำกัด | 77 หมู่ 4 ตำบลบางหมาก อำเภอเมือง จังหวัดชุมพร 86000</p>
-        <div class="footer-links">
-            <a href="#"><i class="fas fa-info-circle"></i> เกี่ยวกับระบบ</a>
-            <a href="#"><i class="fas fa-question-circle"></i> คำถามที่พบบ่อย</a>
-            <a href="#"><i class="fas fa-envelope"></i> ติดต่อสอบถาม</a>
-        </div>
-        <p style="margin-top: 15px; color: #a0aec0; font-size: 0.8rem;">
-            © 2026 สหกรณ์ออมทรัพย์ครูชุมพร จำกัด | ข้อมูลล่าสุด 28 กันยายน 2566
+        <p style="margin-top: 10px; color: #a0aec0; font-size: 0.8rem;">
+            © 2026 สหกรณ์ออมทรัพย์ครูชุมพร จำกัด
         </p>
     </div>
 
     <script>
-        // ============================================
-        // CONFIGURATION (ใส่ URL ของ GAS Web App ที่นี่)
-        // ============================================
-        const GAS_IMAGE_API = 'https://script.google.com/macros/s/AKfycbwKbqpu4ap02cH2pgMzjvBjj_IMAQRz6y_R6Lv99SdCe9T3NOkKE8cK7Q9aGhLrZjpk/exec';
         const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzLAE5A7_LEXNLIUULFDreFwCew3vb4yuKAC9k7WMIJWYjlTjGD9mRNkvKmO_rBtQpg/exec';
-        
-        let imageCounter = 1;
 
-        // ============================================
-        // DOM ELEMENTS
-        // ============================================
         const elements = {
             form: document.getElementById('searchForm'),
             memberId: document.getElementById('memberId'),
@@ -767,124 +513,30 @@
             resultSection: document.getElementById('resultSection')
         };
 
-        // ============================================
-        // IN-APP BROWSER DETECTION
-        // ============================================
-        function detectInAppBrowser() {
-            const ua = navigator.userAgent.toLowerCase();
-            return {
-                isLine: ua.includes('line'),
-                isFacebook: ua.includes('fb') || ua.includes('facebook'),
-                isInstagram: ua.includes('instagram'),
-                isIOS: /iphone|ipad|ipod/.test(ua),
-                isAndroid: /android/.test(ua)
-            };
-        }
-
-        function isMobileOrTablet() {
-            return /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(navigator.userAgent) || 
-                   (navigator.maxTouchPoints > 1 && window.innerWidth < 1024);
-        }
-
-        function isTouchDevice() {
-            return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-        }
-
-        function initInAppWarning() {
-            const browser = detectInAppBrowser();
-            if ((browser.isLine || browser.isFacebook || browser.isInstagram) && isMobileOrTablet()) {
-                document.getElementById('inAppPopup').style.display = 'flex';
-            }
-        }
-
-        function openExternalBrowser() {
-            const url = window.location.href;
-            const browser = detectInAppBrowser();
-
-            if (browser.isAndroid) {
-                const cleanUrl = url.replace(/^https?:\/\//, '');
-                window.location.href = `intent://${cleanUrl}#Intent;scheme=https;package=com.android.chrome;end`;
-            } else {
-                window.location.href = `googlechrome://${url.replace(/^https?:\/\//, '')}`;
-                setTimeout(() => {
-                    window.location.href = url;
-                }, 800);
-            }
-        }
-
-        async function copyPageLink() {
-            const url = window.location.href;
-            const feedback = document.getElementById('copyFeedback');
-            
-            try {
-                await navigator.clipboard.writeText(url);
-                feedback.style.display = 'block';
-                setTimeout(() => { feedback.style.display = 'none'; }, 3000);
-            } catch (err) {
-                const tempInput = document.createElement('input');
-                tempInput.value = url;
-                document.body.appendChild(tempInput);
-                tempInput.select();
-                document.execCommand('copy');
-                document.body.removeChild(tempInput);
-                feedback.style.display = 'block';
-                setTimeout(() => { feedback.style.display = 'none'; }, 3000);
-            }
-        }
-
-        // ============================================
-        // INITIALIZATION
-        // ============================================
         function init() {
             elements.form.addEventListener('submit', handleSubmit);
             elements.memberId.addEventListener('input', handleMemberIdInput);
             elements.birthDate.addEventListener('input', handleBirthDateInput);
             document.getElementById('resetBtn').addEventListener('click', resetSearch);
-            document.getElementById('printBtn').addEventListener('click', printResult);
-            document.getElementById('saveImageBtn').addEventListener('click', saveAsImage);
-            
-            document.getElementById('openBrowserBtn').addEventListener('click', openExternalBrowser);
-            document.getElementById('copyLinkBtn').addEventListener('click', copyPageLink);
-            document.getElementById('closePreviewBtn').addEventListener('click', closePreviewModal);
-            
-            if (isTouchDevice()) {
-                document.getElementById('saveHint').style.display = 'block';
-            }
-            
-            initInAppWarning();
-            
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Enter' && !e.shiftKey) {
-                    if (document.activeElement === elements.memberId || 
-                        document.activeElement === elements.birthDate) {
-                        e.preventDefault();
-                        elements.form.dispatchEvent(new Event('submit'));
-                    }
-                }
-            });
-            
+            document.getElementById('printAreaBtn').addEventListener('click', () => window.print());
             elements.memberId.focus();
         }
 
-        function handleMemberIdInput(e) {
+        function handleMemberIdInput() {
             this.value = this.value.replace(/\D/g, '').slice(0, 5);
             hideStatus();
             hideResult();
         }
 
-        function handleBirthDateInput(e) {
+        function handleBirthDateInput() {
             let val = this.value.replace(/\D/g, '').slice(0, 8);
-            let formatted = '';
-            
             if (val.length > 4) {
-                formatted = val.slice(0, 2) + '/' + val.slice(2, 4) + '/' + val.slice(4);
+                this.value = val.slice(0, 2) + '/' + val.slice(2, 4) + '/' + val.slice(4);
             } else if (val.length > 2) {
-                formatted = val.slice(0, 2) + '/' + val.slice(2);
+                this.value = val.slice(0, 2) + '/' + val.slice(2);
             } else {
-                formatted = val;
+                this.value = val;
             }
-            
-            this.value = formatted;
             hideStatus();
             hideResult();
         }
@@ -894,60 +546,45 @@
             const idVal = elements.memberId.value.trim();
             const dateVal = elements.birthDate.value.trim();
 
-            if (!validateInputs(idVal, dateVal)) return;
+            if (idVal.length !== 5 || dateVal.length !== 10) {
+                showStatus('กรุณากรอกข้อมูลให้ครบถ้วน', 'error');
+                return;
+            }
 
             elements.submitBtn.disabled = true;
             elements.submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> กำลังตรวจสอบ...';
             
-            await performSearch(idVal, dateVal);
-            
-            elements.submitBtn.disabled = false;
-            elements.submitBtn.innerHTML = '<i class="fas fa-search"></i> ตรวจสอบสิทธิ์';
-        }
-
-        async function performSearch(id, date) {
-            showStatus('กำลังตรวจสอบข้อมูลในระบบ...', 'loading');
-            hideResult();
-
             try {
-                const response = await fetchWithJsonp(id, date);
+                const response = await fetchWithJsonp(idVal, dateVal);
                 if (response && response.success) {
                     showResult(response.data);
                     showStatus('ค้นหาข้อมูลสำเร็จ!', 'success');
                 } else {
                     showStatus(response?.message || 'ไม่พบข้อมูลในระบบ', 'error');
                 }
-            } catch (error) {
-                console.error('Search error:', error);
+            } catch (err) {
                 showStatus('เกิดข้อผิดพลาดในการเชื่อมต่อ', 'error');
+            } finally {
+                elements.submitBtn.disabled = false;
+                elements.submitBtn.innerHTML = '<i class="fas fa-search"></i> ตรวจสอบสิทธิ์';
             }
         }
 
         function fetchWithJsonp(id, date) {
             return new Promise((resolve) => {
-                const callbackName = `callback_${Date.now()}`;
+                const callbackName = `cb_${Date.now()}`;
                 const script = document.createElement('script');
-                const params = new URLSearchParams({
-                    q: id,
-                    birthDate: date,
-                    callback: callbackName,
-                    _: Date.now()
-                });
-
-                script.src = `${WEB_APP_URL}?${params}`;
-
-                window[callbackName] = function(response) {
+                script.src = `${WEB_APP_URL}?q=${id}&birthDate=${date}&callback=${callbackName}`;
+                window[callbackName] = (res) => {
                     document.head.removeChild(script);
                     delete window[callbackName];
-                    resolve(response);
+                    resolve(res);
                 };
-
-                script.onerror = function() {
+                script.onerror = () => {
                     document.head.removeChild(script);
-                    delete window[callbackName];
+                    delete window.callbackName;
                     resolve(null);
                 };
-
                 document.head.appendChild(script);
             });
         }
@@ -960,24 +597,13 @@
             document.getElementById('resPlace').textContent = data.pollingPlace || '-';
             document.getElementById('resNote').textContent = data.note || '-';
 
-            elements.resultSection.style.display = 'block';
-            setTimeout(() => {
-                elements.resultSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }, 100);
-        }
+            const today = new Date();
+            document.getElementById('slipDate').textContent = today.toLocaleDateString('th-TH', {
+                year: 'numeric', month: 'long', day: 'numeric'
+            });
 
-        function validateInputs(id, date) {
-            if (id.length !== 5) {
-                showStatus('กรุณากรอกเลขทะเบียนให้ครบ 5 หลัก', 'error');
-                elements.memberId.focus();
-                return false;
-            }
-            if (date.length !== 10) {
-                showStatus('กรุณากรอกวันเกิดให้ครบ 8 หลัก', 'error');
-                elements.birthDate.focus();
-                return false;
-            }
-            return true;
+            elements.resultSection.style.display = 'block';
+            elements.resultSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
         function resetSearch() {
@@ -986,89 +612,12 @@
             hideResult();
             hideStatus();
             elements.memberId.focus();
-            imageCounter = 1;
         }
 
-        function printResult() {
-            window.print();
-        }
-
-        // ============================================
-        // SAVE IMAGE VIA GAS (Google Slides Backend)
-        // ============================================
-        async function saveAsImage() {
-            const saveBtn = document.getElementById('saveImageBtn');
-            const originalText = saveBtn.innerHTML;
-            const memberId = document.getElementById('resId').textContent || '00000';
-            const counterStr = imageCounter.toString().padStart(6, '0');
-            const fileName = `ข้อมูลที่ลงคะแนน_${memberId}_${counterStr}.png`;
-            
-            saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> กำลังสร้างรูป...';
-            saveBtn.disabled = true;
-            
-            try {
-                const payload = {
-                    sequence: document.getElementById('resSeq').textContent,
-                    memberId: memberId,
-                    fullName: document.getElementById('resName').textContent,
-                    unit: document.getElementById('resUnit').textContent,
-                    pollingPlace: document.getElementById('resPlace').textContent,
-                    note: document.getElementById('resNote').textContent,
-                    date: new Date().toLocaleDateString('th-TH', {
-                        year: 'numeric', month: 'long', day: 'numeric'
-                    })
-                };
-                
-                const response = await fetch(GAS_IMAGE_API, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-                
-                const result = await response.json();
-                
-                if (!result.success) {
-                    throw new Error(result.message || 'สร้างรูปไม่สำเร็จ');
-                }
-                
-                const imageUrl = `data:${result.mimeType};base64,${result.imageBase64}`;
-                
-                if (isTouchDevice()) {
-                    // บนมือถือ แสดง Modal ให้กดค้างเซฟ
-                    document.getElementById('previewImg').src = imageUrl;
-                    document.getElementById('imagePreviewModal').style.display = 'flex';
-                } else {
-                    // บนคอม ดาวน์โหลดปกติ
-                    const link = document.createElement('a');
-                    link.download = fileName;
-                    link.href = imageUrl;
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
-                }
-                
-                showStatus('สร้างรูปภาพสำเร็จ!', 'success');
-                imageCounter++;
-                
-            } catch (error) {
-                console.error('Error generating image via GAS:', error);
-                showStatus('สร้างรูปภาพไม่สำเร็จ กรุณาลองใหม่อีกครั้ง', 'error');
-            } finally {
-                saveBtn.innerHTML = originalText;
-                saveBtn.disabled = false;
-            }
-        }
-
-        function closePreviewModal() {
-            document.getElementById('imagePreviewModal').style.display = 'none';
-        }
-
-        function showStatus(message, type) {
-            elements.statusMessage.textContent = message;
+        function showStatus(msg, type) {
+            elements.statusMessage.textContent = msg;
             elements.statusMessage.className = `status-message status-${type}`;
-            if (type !== 'error') {
-                setTimeout(hideStatus, 3000);
-            }
+            if (type !== 'error') setTimeout(hideStatus, 3000);
         }
 
         function hideStatus() {
