@@ -102,22 +102,29 @@
         .preview-modal__box {
             background: white;
             border-radius: 16px;
-            max-width: 480px;
+            max-width: 460px;
             width: 100%;
-            padding: 20px;
+            padding: 24px;
             text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
         }
 
         .preview-modal__box h3 {
             color: var(--primary-dark);
-            font-size: 1.1rem;
-            margin-bottom: 10px;
+            font-size: 1.15rem;
+            margin-bottom: 6px;
+        }
+
+        .preview-modal__box p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 16px;
         }
 
         .preview-modal__box img {
             max-width: 100%;
             border-radius: 12px;
-            margin: 16px 0;
+            margin: 12px 0;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
 
@@ -246,6 +253,7 @@
             font-weight: 600;
         }
 
+        /* Form Grid */
         .form-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -409,19 +417,14 @@
         }
 
         /* ===== กรอบ Capture เฉพาะส่วนผลการตรวจสอบ ===== */
-        .capture-area {
-            background: white;
+        #captureArea {
+            background: #ffffff;
             border-radius: var(--radius);
             overflow: hidden;
-            box-shadow: var(--shadow);
         }
 
-        .capture-area .result-header {
+        #captureArea .result-header {
             border-radius: 0;
-        }
-
-        .capture-area .result-content {
-            padding-bottom: 0;
         }
 
         .result-header {
@@ -580,6 +583,13 @@
             }
         }
 
+        /* ===== ซ่อนปุ่มพิมพ์บนมือถือ/แท็บเล็ต ===== */
+        @media (hover: none) and (pointer: coarse) {
+            #printBtn {
+                display: none !important;
+            }
+        }
+
         /* Print Styles */
         @media print {
             body * { visibility: hidden; }
@@ -620,8 +630,11 @@
     <div id="imagePreviewModal" class="preview-modal">
         <div class="preview-modal__box">
             <h3>แตะที่รูปค้างไว้ แล้วเลือก "บันทึกรูปภาพ"</h3>
+            <p>จากนั้นเลือก "บันทึกรูปภาพ" เพื่อเก็บลงอัลบั้ม</p>
             <img id="previewImg" src="" alt="ผลการตรวจสอบ">
-            <button id="closePreviewBtn" class="btn btn-secondary">ปิด</button>
+            <button id="closePreviewBtn" class="btn btn-secondary">
+                <i class="fas fa-times"></i> ปิด
+            </button>
         </div>
     </div>
 
@@ -694,7 +707,7 @@
         <!-- Result Section -->
         <div class="result-section" id="resultSection">
             <!-- กรอบ Capture เฉพาะส่วนนี้ -->
-            <div id="captureArea" class="capture-area">
+            <div id="captureArea">
                 <div class="result-header">
                     <h3><i class="fas fa-file-alt"></i> ผลการตรวจสอบข้อมูลสมาชิก</h3>
                 </div>
@@ -804,10 +817,6 @@
                    (navigator.maxTouchPoints > 1 && window.innerWidth < 1024);
         }
 
-        function isTouchDevice() {
-            return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-        }
-
         function initInAppWarning() {
             const browser = detectInAppBrowser();
             if ((browser.isLine || browser.isFacebook || browser.isInstagram) && isMobileOrTablet()) {
@@ -820,13 +829,10 @@
             const browser = detectInAppBrowser();
 
             if (browser.isAndroid) {
-                // Android: ใช้ Intent URL เปิด Chrome หรือ Browser ภายนอก
                 const cleanUrl = url.replace(/^https?:\/\//, '');
                 window.location.href = `intent://${cleanUrl}#Intent;scheme=https;package=com.android.chrome;end`;
             } else {
-                // iOS: ลองเปิด Chrome scheme ถ้าติดตั้งไว้
                 window.location.href = `googlechrome://${url.replace(/^https?:\/\//, '')}`;
-                // fallback กลับไปหน้าเดิมหาก scheme ไม่ทำงาน
                 setTimeout(() => {
                     window.location.href = url;
                 }, 800);
@@ -844,7 +850,6 @@
                     feedback.style.display = 'none';
                 }, 3000);
             } catch (err) {
-                // fallback สำหรับเครื่องที่ไม่รองรับ clipboard API
                 const tempInput = document.createElement('input');
                 tempInput.value = url;
                 document.body.appendChild(tempInput);
@@ -856,43 +861,6 @@
                     feedback.style.display = 'none';
                 }, 3000);
             }
-        }
-
-        // ============================================
-        // IMAGE SAVE HELPERS
-        // ============================================
-        function downloadImage(dataUrl, fileName) {
-            const link = document.createElement('a');
-            link.href = dataUrl;
-            link.download = fileName;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-
-        function showImagePreviewModal(dataUrl) {
-            document.getElementById('previewImg').src = dataUrl;
-            document.getElementById('imagePreviewModal').style.display = 'flex';
-        }
-
-        function closeImagePreviewModal() {
-            document.getElementById('imagePreviewModal').style.display = 'none';
-        }
-
-        async function shareImageFile(dataUrl, fileName) {
-            const response = await fetch(dataUrl);
-            const blob = await response.blob();
-            const file = new File([blob], fileName, { type: 'image/png' });
-
-            if (navigator.canShare && navigator.canShare({ files: [file] })) {
-                await navigator.share({
-                    files: [file],
-                    title: 'ผลการตรวจสอบสมาชิก',
-                    text: fileName
-                });
-                return true;
-            }
-            return false;
         }
 
         // ============================================
@@ -910,7 +878,7 @@
             // Popup listeners
             document.getElementById('openBrowserBtn').addEventListener('click', openExternalBrowser);
             document.getElementById('copyLinkBtn').addEventListener('click', copyPageLink);
-            document.getElementById('closePreviewBtn').addEventListener('click', closeImagePreviewModal);
+            document.getElementById('closePreviewBtn').addEventListener('click', closePreviewModal);
             
             // ตรวจสอบการเปิดผ่าน In-App Browser
             initInAppWarning();
@@ -965,17 +933,13 @@
             const idVal = elements.memberId.value.trim();
             const dateVal = elements.birthDate.value.trim();
 
-            // Validation
             if (!validateInputs(idVal, dateVal)) return;
 
-            // Disable submit button and show loading
             elements.submitBtn.disabled = true;
             elements.submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> กำลังตรวจสอบ...';
             
-            // Perform search
             await performSearch(idVal, dateVal);
             
-            // Re-enable submit button
             elements.submitBtn.disabled = false;
             elements.submitBtn.innerHTML = '<i class="fas fa-search"></i> ตรวจสอบสิทธิ์';
         }
@@ -991,7 +955,6 @@
                 const response = await fetchWithJsonp(id, date);
                 
                 if (response && response.success) {
-                    // Show result
                     showResult(response.data);
                     showStatus('ค้นหาข้อมูลสำเร็จ!', 'success');
                 } else {
@@ -1040,7 +1003,6 @@
         // RESULT DISPLAY
         // ============================================
         function showResult(data) {
-            // Update result fields
             document.getElementById('resSeq').textContent = data.sequence || '-';
             document.getElementById('resId').textContent = data.memberId || '-';
             document.getElementById('resName').textContent = data.fullName || '-';
@@ -1048,7 +1010,6 @@
             document.getElementById('resPlace').textContent = data.pollingPlace || '-';
             document.getElementById('resNote').textContent = data.note || '-';
 
-            // วันที่ตรวจสอบปัจจุบัน
             const today = new Date();
             document.getElementById('slipDate').textContent = today.toLocaleDateString('th-TH', {
                 year: 'numeric',
@@ -1056,10 +1017,8 @@
                 day: 'numeric'
             });
 
-            // Show result section
             elements.resultSection.style.display = 'block';
             
-            // Smooth scroll to result
             setTimeout(() => {
                 elements.resultSection.scrollIntoView({ 
                     behavior: 'smooth',
@@ -1093,8 +1052,6 @@
             hideResult();
             hideStatus();
             elements.memberId.focus();
-            
-            // Reset image counter
             imageCounter = 1;
         }
 
@@ -1103,24 +1060,22 @@
         }
 
         // ============================================
-        // SAVE IMAGE (Computer vs Mobile/Tablet)
+        // SAVE IMAGE: html2canvas + Preview Modal
         // ============================================
         async function saveAsImage() {
             const captureArea = document.getElementById('captureArea');
             const saveBtn = document.getElementById('saveImageBtn');
             const originalText = saveBtn.innerHTML;
-            const memberId = document.getElementById('resId').textContent || '00000';
             
-            // Format file name: ข้อมูลที่ลงคะแนน_13750_000001
-            const counterStr = imageCounter.toString().padStart(6, '0');
-            const fileName = `ข้อมูลที่ลงคะแนน_${memberId}_${counterStr}.png`;
-            
-            saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> กำลังบันทึก...';
+            saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> กำลังสร้างรูป...';
             saveBtn.disabled = true;
             
             try {
-                // รอให้ฟอนต์และไอคอนโหลดเสร็จก่อนแคป
+                // รอให้ฟอนต์และไอคอนโหลดเสร็จก่อน
                 await document.fonts.ready;
+                
+                // รอเพิ่มอีกนิดสำหรับ Font Awesome
+                await new Promise(resolve => setTimeout(resolve, 300));
                 
                 // แคปเฉพาะส่วน #captureArea
                 const canvas = await html2canvas(captureArea, { 
@@ -1128,42 +1083,36 @@
                     scale: 3,
                     useCORS: true,
                     allowTaint: true,
-                    logging: false
+                    logging: false,
+                    width: captureArea.offsetWidth,
+                    height: captureArea.offsetHeight
                 });
                 
-                const dataUrl = canvas.toDataURL('image/png', 1.0);
+                const dataUrl = canvas.toDataURL('image/png');
                 
-                if (isTouchDevice()) {
-                    // บนมือถือ/แท็บเล็ต: ลองใช้ Web Share API ก่อน
-                    const shared = await shareImageFile(dataUrl, fileName);
-                    if (!shared) {
-                        // ถ้าแชร์ไม่ได้ ให้แสดง Modal กดค้างเซฟ
-                        showImagePreviewModal(dataUrl);
-                    }
-                } else {
-                    // บนคอมพิวเตอร์: ดาวน์โหลดปกติ
-                    downloadImage(dataUrl, fileName);
-                }
+                // แสดง Preview Modal ให้ผู้ใช้กดค้างเซฟ
+                document.getElementById('previewImg').src = dataUrl;
+                document.getElementById('imagePreviewModal').style.display = 'flex';
                 
-                showStatus('บันทึกรูปภาพสำเร็จ: ' + fileName, 'success');
-                
-                // Increment counter for next image
-                imageCounter++;
+                showStatus('สร้างรูปภาพสำเร็จ กรุณากดค้างที่รูปเพื่อบันทึก', 'success');
                 
             } catch (error) {
-                console.error('Error saving image:', error);
-                showStatus('บันทึกรูปภาพไม่สำเร็จ', 'error');
+                console.error('Error generating image:', error);
+                showStatus('สร้างรูปภาพไม่สำเร็จ กรุณาลองใหม่อีกครั้ง', 'error');
             } finally {
                 saveBtn.innerHTML = originalText;
                 saveBtn.disabled = false;
             }
         }
 
+        function closePreviewModal() {
+            document.getElementById('imagePreviewModal').style.display = 'none';
+        }
+
         function showStatus(message, type) {
             elements.statusMessage.textContent = message;
             elements.statusMessage.className = `status-message status-${type}`;
             
-            // Auto-hide non-error messages
             if (type !== 'error') {
                 setTimeout(hideStatus, 3000);
             }
