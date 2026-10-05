@@ -105,7 +105,7 @@
             margin: 0 auto;
         }
 
-        /* ===== COUNTDOWN TIMER (ปรับปรุงข้อความเน้นคำ) ===== */
+        /* ===== COUNTDOWN TIMER ===== */
         .countdown-container {
             background: linear-gradient(135deg, #1e3a8a 0%, #1e1b4b 100%);
             color: white;
@@ -124,7 +124,6 @@
             font-weight: 500;
         }
 
-        /* ส่วนเน้นคำวันที่เลือกตั้ง */
         .highlight-date {
             color: var(--accent);
             font-weight: 700;
@@ -162,7 +161,7 @@
             color: #cbd5e1;
         }
 
-        /* ===== CHECKLIST: สิ่งที่ต้องเตรียม ===== */
+        /* ===== CHECKLIST ===== */
         .guideline-card {
             background: white;
             border-radius: var(--radius);
@@ -502,30 +501,41 @@
             }
         }
 
-        /* Print Style สำหรับคอมพิวเตอร์ */
+        /* ===== Print Style สำหรับคอมพิวเตอร์ (ชิดด้านบน, ขอบซ้ายขวา 1.5 ซม.) ===== */
         @media print {
-            body * { visibility: hidden; }
-            .result-page, .result-page * { visibility: visible; }
+            @page {
+                size: auto;
+                margin: 0mm;
+            }
+            body * {
+                visibility: hidden !important;
+            }
+            .result-card, .result-card * {
+                visibility: visible !important;
+            }
             .result-page {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100vw;
-                height: 100vh;
-                background: white;
-                padding: 0;
-                display: flex !important;
-                justify-content: flex-start;
-                align-items: center;
+                position: absolute !important;
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+                background: white !important;
+                display: block !important;
+                padding: 0 !important;
             }
             .result-card {
-                box-shadow: none;
-                border: 1px solid #cbd5e1;
-                margin-top: 1cm;
-                width: calc(100% - 3cm);
-                max-width: 14cm;
+                position: absolute !important;
+                left: 50% !important;
+                top: 1cm !important;
+                transform: translateX(-50%) !important;
+                box-shadow: none !important;
+                border: 1px solid #cbd5e1 !important;
+                width: calc(100% - 3cm) !important;
+                max-width: 14cm !important;
             }
-            .result-actions, .mobile-notice { display: none !important; }
+            .result-actions, .mobile-notice {
+                display: none !important;
+            }
         }
     </style>
 </head>
@@ -545,7 +555,7 @@
             <p>สรรหาผู้แทนสมาชิก ประจำปี พ.ศ. 2569</p>
         </div>
 
-        <!-- ลูกเล่น: นับเวลาถอยหลัง (ปรับเน้นคำวันที่ 28 พ.ย. 2569) -->
+        <!-- นับเวลาถอยหลัง -->
         <div class="countdown-container">
             <div class="countdown-title">
                 <i class="fas fa-clock"></i> นับถอยหลังวันลงคะแนน <span class="highlight-date">28 พ.ย. 2569</span>
@@ -570,7 +580,7 @@
             </div>
         </div>
 
-        <!-- กล่องเน้นย้ำสิ่งที่ต้องเตรียมตัว -->
+        <!-- สิ่งที่ต้องเตรียม -->
         <div class="guideline-card">
             <div class="guideline-title">
                 <i class="fas fa-exclamation-circle"></i> สิ่งที่ต้องเตรียมไปในวันลงคะแนน
@@ -634,7 +644,7 @@
         </div>
     </div>
 
-    <!-- VIEW 2: หน้าจอผลลัพธ์แบบพอดีจออัตโนมัติ -->
+    <!-- VIEW 2: หน้าจอผลลัพธ์ -->
     <div class="result-page" id="resultPage">
         <div class="result-card">
             <div class="result-header">
@@ -704,7 +714,6 @@
             resultPage: document.getElementById('resultPage')
         };
 
-        // ตั้งเวลาเป้าหมายเป็นวันที่ 28 พฤศจิกายน 2026 เวลา 08:30 น.
         const electionDate = new Date('2026-11-28T08:30:00').getTime();
 
         function updateCountdown() {
@@ -739,7 +748,11 @@
             elements.birthDate.addEventListener('input', handleBirthDateInput);
             
             document.getElementById('backToSearchBtn').addEventListener('click', resetToSearchView);
-            document.getElementById('printBtn').addEventListener('click', () => window.print());
+            
+            // แก้ไขปุ่มพิมพ์ให้เรียกคำสั่ง window.print() โดยตรงอย่างมั่นใจ
+            document.getElementById('printBtn').addEventListener('click', function() {
+                window.print();
+            });
             
             elements.memberId.focus();
         }
