@@ -2,7 +2,7 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>ระบบตรวจสอบสมาชิก | สหกรณ์ออมทรัพย์ครูชุมพร จำกัด</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -33,14 +33,15 @@
             background: linear-gradient(135deg, #edf2f7 0%, #e2e8f0 100%);
             color: var(--text-dark);
             min-height: 100vh;
-            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
         }
 
         /* Top Navigation Bar */
         .top-bar {
             background: linear-gradient(90deg, var(--primary-dark), var(--primary));
             color: white;
-            padding: 12px 20px;
+            padding: 10px 15px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -50,28 +51,29 @@
         .top-bar .logo {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             font-weight: 600;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
         }
 
         .top-bar .logo i {
             color: var(--accent);
-            font-size: 1.5rem;
+            font-size: 1.3rem;
         }
 
         /* Main Container */
         .container {
             max-width: 800px;
-            margin: 30px auto;
-            padding: 0 20px;
+            margin: auto;
+            padding: 15px;
+            width: 100%;
         }
 
         /* Header */
         .page-header {
             text-align: center;
-            margin-bottom: 30px;
-            padding: 25px;
+            margin-bottom: 20px;
+            padding: 20px;
             background: white;
             border-radius: var(--radius);
             box-shadow: var(--shadow);
@@ -80,12 +82,13 @@
 
         .page-header h1 {
             color: var(--primary-dark);
-            margin-bottom: 10px;
-            font-size: 1.8rem;
+            margin-bottom: 8px;
+            font-size: 1.5rem;
         }
 
         .page-header p {
             color: var(--text-light);
+            font-size: 0.9rem;
             max-width: 600px;
             margin: 0 auto;
         }
@@ -95,51 +98,52 @@
             background: white;
             border-radius: var(--radius);
             box-shadow: var(--shadow);
-            padding: 30px;
-            margin-bottom: 25px;
+            padding: 20px;
+            margin-bottom: 20px;
         }
 
         .section-title {
             display: flex;
             align-items: center;
-            gap: 10px;
-            margin-bottom: 25px;
-            padding-bottom: 15px;
+            gap: 8px;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
             border-bottom: 2px solid var(--border-color);
         }
 
         .section-title i {
             color: var(--primary);
-            font-size: 1.2rem;
+            font-size: 1.1rem;
         }
 
         .section-title h2 {
             color: var(--primary-dark);
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: 600;
         }
 
         .form-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin-bottom: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
         }
 
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         .form-label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             font-weight: 500;
             color: var(--text-dark);
+            font-size: 0.95rem;
         }
 
         .form-control {
             width: 100%;
-            padding: 14px 15px;
+            padding: 12px 15px;
             border: 1px solid var(--border-color);
             border-radius: 6px;
             font-size: 1.1rem;
@@ -156,9 +160,9 @@
         }
 
         .form-hint {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: var(--text-light);
-            margin-top: 5px;
+            margin-top: 4px;
             display: flex;
             align-items: center;
             gap: 5px;
@@ -169,8 +173,8 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-            padding: 14px 25px;
+            gap: 8px;
+            padding: 12px 20px;
             border-radius: 6px;
             font-weight: 500;
             font-size: 1rem;
@@ -187,7 +191,6 @@
 
         .btn-primary:hover {
             background: linear-gradient(135deg, var(--primary-dark), var(--primary));
-            transform: translateY(-2px);
         }
 
         .btn-secondary {
@@ -203,10 +206,11 @@
 
         /* Status Messages */
         .status-message {
-            padding: 15px;
+            padding: 12px;
             border-radius: var(--radius);
-            margin: 20px 0;
+            margin: 15px 0;
             font-weight: 500;
+            font-size: 0.95rem;
             display: none;
         }
 
@@ -214,46 +218,51 @@
         .status-success { background: #f0fff4; color: #276749; border: 1px solid #9ae6b4; display: block; }
         .status-loading { background: #ebf8ff; color: var(--primary); border: 1px solid #90cdf4; display: block; }
 
-        /* ===== VIEW 2: หน้าจอแสดงผลลัพธ์แบบเต็มจอแยกต่างหาก ===== */
+        /* ===== VIEW 2: หน้าจอผลลัพธ์แบบพอดีจออัตโนมัติทุกรุ่น (Fit to Screen) ===== */
         .result-page {
-            display: none; /* ซ่อนไว้ก่อน จะแสดงเมื่อค้นหาสำเร็จ */
+            display: none;
             position: fixed;
             inset: 0;
             background: #f8fafc;
             z-index: 9999;
             overflow-y: auto;
-            padding: 20px;
+            padding: 10px;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
 
         .result-card {
             background: white;
             border-radius: var(--radius);
             box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            max-width: 650px;
-            margin: 20px auto;
+            width: 100%;
+            max-width: 520px;
             overflow: hidden;
             border: 1px solid var(--border-color);
+            margin: auto;
         }
 
         .result-header {
             background: linear-gradient(90deg, var(--primary-dark), var(--primary));
             color: white;
-            padding: 20px;
-            font-size: 1.2rem;
+            padding: 12px 18px;
+            font-size: 1rem;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             font-weight: 600;
         }
 
         .result-content {
-            padding: 30px 25px;
+            padding: 12px 18px;
         }
 
+        /* ตารางข้อมูลจัดระเบียบให้พอดีตาและกระชับ */
         .result-table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 25px;
+            margin-bottom: 10px;
         }
 
         .result-table tr {
@@ -265,13 +274,13 @@
         }
 
         .result-table td {
-            padding: 16px 10px;
-            vertical-align: top;
-            font-size: 1.05rem;
+            padding: 7px 6px;
+            vertical-align: middle;
+            font-size: 0.92rem;
         }
 
         .result-table td:first-child {
-            width: 35%;
+            width: 32%;
             color: var(--secondary);
             font-weight: 500;
             position: relative;
@@ -280,71 +289,82 @@
         .result-table td:first-child::after {
             content: ':';
             position: absolute;
-            right: 15px;
+            right: 10px;
             color: var(--text-light);
         }
 
         .result-table td:last-child {
-            width: 65%;
+            width: 68%;
             color: var(--text-dark);
             font-weight: 600;
         }
 
-        /* Slip Footer */
+        /* จัดแต่งฟอนต์ตัวเลขให้เรียบร้อย */
+        .num-format {
+            font-family: 'Courier New', monospace;
+            letter-spacing: 0.5px;
+        }
+
+        /* กรณีมีหมายเหตุแจ้งเตือน (ไม่มีสิทธิ์) */
+        .note-alert {
+            color: var(--error) !important;
+            font-weight: 700 !important;
+        }
+
+        /* Slip Footer แบบกระชับ */
         .slip-footer {
-            padding: 18px 20px;
+            padding: 8px;
             text-align: center;
             border-top: 1px dashed var(--border-color);
             color: var(--text-light);
-            font-size: 0.9rem;
+            font-size: 0.78rem;
             background: #fafafa;
             border-radius: 6px;
-            margin-bottom: 25px;
+            margin-bottom: 10px;
         }
 
         .slip-footer p {
-            margin-bottom: 4px;
+            margin-bottom: 2px;
         }
 
         /* Action Area ในหน้าผลลัพธ์ */
         .result-actions {
             display: flex;
-            gap: 15px;
-            padding: 0 25px 30px 25px;
+            gap: 10px;
+            padding: 0 18px 14px 18px;
         }
 
         .result-actions .btn {
             flex: 1;
-            padding: 14px;
+            padding: 10px;
+            font-size: 0.9rem;
         }
 
-        /* ข้อความแจ้งเตือนบนมือถือในหน้าผลลัพธ์ */
+        /* ข้อความแจ้งเตือนบนมือถือ */
         .mobile-notice {
             background: #fffbeb;
             border: 1px solid #f59e0b;
             color: #92400e;
-            padding: 14px;
+            padding: 8px 10px;
             border-radius: 6px;
             text-align: center;
             font-weight: 500;
-            font-size: 0.95rem;
-            margin-bottom: 20px;
+            font-size: 0.8rem;
+            margin-bottom: 10px;
             display: none;
         }
 
         .mobile-notice i {
             color: #d97706;
-            margin-right: 6px;
+            margin-right: 4px;
         }
 
-        /* Footer ปกติ */
         .footer {
             text-align: center;
-            padding: 25px 20px;
+            padding: 15px;
             color: var(--text-light);
-            font-size: 0.9rem;
-            margin-top: 40px;
-            border-top: 1px solid var(--border-color);
+            font-size: 0.8rem;
+            margin-top: 15px;
             background: white;
             border-radius: var(--radius);
         }
@@ -359,25 +379,40 @@
             }
         }
 
-        /* Print Style สำหรับคอมพิวเตอร์ */
+        /* ===== Print Style สำหรับคอมพิวเตอร์ (ชิดด้านบน, เว้นขอบซ้าย-ขวา 1.5 ซม., กึ่งกลาง) ===== */
         @media print {
-            body * { visibility: hidden; }
-            .result-page, .result-page * { visibility: visible; }
+            @page {
+                size: auto;
+                margin: 0mm; /* ตัด margin เริ่มต้นของเบราว์เซอร์ออก ควบคุมเองผ่าน CSS ด้านล่าง */
+            }
+            body * {
+                visibility: hidden;
+            }
+            .result-page, .result-page * {
+                visibility: visible;
+            }
             .result-page {
                 position: absolute;
                 left: 0;
                 top: 0;
-                width: 100%;
+                width: 100vw;
+                height: 100vh;
                 background: white;
                 padding: 0;
+                display: flex !important;
+                justify-content: flex-start; /* ชิดด้านบน */
+                align-items: center;       /* จัดกึ่งกลางแนวนอน */
             }
             .result-card {
                 box-shadow: none;
-                border: none;
-                margin: 0;
-                max-width: 100%;
+                border: 1px solid #cbd5e1;
+                margin-top: 1cm; /* เว้นขอบด้านบนเล็กน้อย */
+                width: calc(100% - 3cm); /* หักลบขอบซ้าย 1.5 ซม. และขวา 1.5 ซม. (รวมเป็น 3 ซม.) */
+                max-width: 14cm;
             }
-            .result-actions, .mobile-notice { display: none; }
+            .result-actions, .mobile-notice {
+                display: none !important;
+            }
         }
     </style>
 </head>
@@ -443,7 +478,7 @@
         </div>
     </div>
 
-    <!-- VIEW 2: หน้าจอผลลัพธ์แบบเต็มจอแยกต่างหาก -->
+    <!-- VIEW 2: หน้าจอผลลัพธ์แบบพอดีจออัตโนมัติทุกรุ่น -->
     <div class="result-page" id="resultPage">
         <div class="result-card">
             <div class="result-header">
@@ -453,20 +488,20 @@
             <div class="result-content">
                 <!-- คำเตือนเฉพาะมือถือ -->
                 <div class="mobile-notice">
-                    <i class="fas fa-camera"></i> กรุณาบันทึกภาพหน้าจอไว้นี้เพื่อความสะดวกในการตรวจสอบ
+                    <i class="fas fa-camera"></i> กรุณาบันทึกภาพหน้าจอไว้เพื่อความสะดวก
                 </div>
 
                 <table class="result-table">
                     <tr>
                         <td>ลำดับที่</td>
-                        <td id="resSeq">-</td>
+                        <td><span id="resSeq" class="num-format">-</span></td>
                     </tr>
                     <tr>
                         <td>ทะเบียนสมาชิก</td>
-                        <td id="resId">-</td>
+                        <td><span id="resId" class="num-format">-</span></td>
                     </tr>
                     <tr>
-                        <td>ชื่อ - นามสกุล</td>
+                        <td>ชื่อ - สกุล</td>
                         <td id="resName">-</td>
                     </tr>
                     <tr>
@@ -485,7 +520,7 @@
 
                 <div class="slip-footer">
                     <p><strong>สหกรณ์ออมทรัพย์ครูชุมพร จำกัด</strong></p>
-                    <p>77 หมู่ 4 ตำบลบางหมาก อำเภอเมือง จังหวัดชุมพร 86000</p>
+                    <p>77 หมู่ 4 ตำบลบางหมาก อำเภอเมือง จ.ชุมพร 86000</p>
                     <p>วันที่ตรวจสอบ: <span id="slipDate">-</span></p>
                 </div>
             </div>
@@ -590,25 +625,42 @@
         }
 
         function showResultPage(data) {
-            document.getElementById('resSeq').textContent = data.sequence || '-';
+            // ลำดับที่ (แสดงตัวเลขสูงสุด 3 หลัก)
+            document.getElementById('resSeq').textContent = data.sequence ? String(data.sequence).slice(-3) : '-';
+            
+            // ทะเบียนสมาชิก (5 หลัก จัดรูปแบบตัวเลข)
             document.getElementById('resId').textContent = data.memberId || '-';
+            
+            // ชื่อ - สกุล
             document.getElementById('resName').textContent = data.fullName || '-';
+            
+            // หน่วย
             document.getElementById('resUnit').textContent = data.unit || '-';
+            
+            // สถานที่ลงคะแนน
             document.getElementById('resPlace').textContent = data.pollingPlace || '-';
-            document.getElementById('resNote').textContent = data.note || '-';
+            
+            // หมายเหตุ (หากมีข้อความแจ้งเตือนเงื่อนไข จะแสดงเป็นสีแดงเด่นชัด)
+            const noteEl = document.getElementById('resNote');
+            const noteText = data.note ? String(data.note).trim() : '';
+            if (noteText && noteText !== '-') {
+                noteEl.textContent = noteText;
+                noteEl.className = 'note-alert';
+            } else {
+                noteEl.textContent = '-';
+                noteEl.className = '';
+            }
 
             const today = new Date();
             document.getElementById('slipDate').textContent = today.toLocaleDateString('th-TH', {
                 year: 'numeric', month: 'long', day: 'numeric'
             });
 
-            // สลับหน้าจอไปหน้าผลลัพธ์แบบเต็มจอ
-            elements.resultPage.style.display = 'block';
+            elements.resultPage.style.display = 'flex';
             window.scrollTo(0, 0);
         }
 
         function resetToSearchView() {
-            // ซ่อนหน้าผลลัพธ์ กลับมาหน้าค้นหา
             elements.resultPage.style.display = 'none';
             elements.memberId.value = '';
             elements.birthDate.value = '';
