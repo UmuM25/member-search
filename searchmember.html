@@ -6,7 +6,6 @@
     <title>ระบบตรวจสอบสมาชิก | สหกรณ์ออมทรัพย์ครูชุมพร จำกัด</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <style>
         :root {
             --primary-dark: #1a365d;
@@ -86,7 +85,7 @@
             display: none;
         }
 
-        /* ===== POPUP: Preview รูปภาพ ===== */
+        /* ===== POPUP: Preview รูปภาพจาก GAS ===== */
         .preview-modal {
             position: fixed;
             inset: 0;
@@ -126,25 +125,6 @@
             border-radius: 12px;
             margin: 12px 0;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-
-        /* ===== MANUAL CAPTURE NOTICE ===== */
-        .manual-capture {
-            display: none;
-            background: linear-gradient(135deg, #fffbeb, #fef3c7);
-            border: 1px solid #f59e0b;
-            border-radius: var(--radius);
-            padding: 15px;
-            margin: 15px 20px;
-            color: #92400e;
-            font-size: 0.9rem;
-            text-align: center;
-        }
-
-        .manual-capture i {
-            font-size: 1.5rem;
-            margin-bottom: 8px;
-            display: block;
         }
 
         /* Top Navigation Bar */
@@ -435,17 +415,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* ===== กรอบ Capture เฉพาะส่วนผลการตรวจสอบ ===== */
-        #captureArea {
-            background: #ffffff;
-            border-radius: var(--radius);
-            overflow: hidden;
-        }
-
-        #captureArea .result-header {
-            border-radius: 0;
-        }
-
         .result-header {
             background: linear-gradient(90deg, var(--primary-dark), var(--primary));
             color: white;
@@ -511,20 +480,6 @@
             color: var(--text-dark);
             font-weight: 500;
             font-family: 'Noto Sans Thai', sans-serif;
-        }
-
-        /* Slip Footer */
-        .slip-footer {
-            padding: 18px 25px;
-            text-align: center;
-            border-top: 1px dashed var(--border-color);
-            color: var(--text-light);
-            font-size: 0.85rem;
-            background: #fafafa;
-        }
-
-        .slip-footer p {
-            margin-bottom: 4px;
         }
 
         /* Action Buttons */
@@ -621,7 +576,7 @@
                 box-shadow: none;
                 border: 1px solid #ccc;
             }
-            .action-buttons, .top-bar, .form-section, .footer, .manual-capture { display: none; }
+            .action-buttons, .top-bar, .form-section, .footer { display: none; }
         }
     </style>
 </head>
@@ -645,7 +600,7 @@
         </div>
     </div>
 
-    <!-- ===== POPUP: Preview รูปภาพก่อนบันทึก ===== -->
+    <!-- ===== POPUP: Preview รูปภาพจาก GAS ===== -->
     <div id="imagePreviewModal" class="preview-modal">
         <div class="preview-modal__box">
             <h3>แตะที่รูปค้างไว้ แล้วเลือก "บันทึกรูปภาพ"</h3>
@@ -725,72 +680,55 @@
 
         <!-- Result Section -->
         <div class="result-section" id="resultSection">
-            <!-- กรอบ Capture เฉพาะส่วนนี้ -->
-            <div id="captureArea">
-                <div class="result-header">
-                    <h3><i class="fas fa-file-alt"></i> ผลการตรวจสอบข้อมูลสมาชิก</h3>
-                </div>
-
-                <div class="result-content">
-                    <div id="printableArea">
-                        <table class="result-table">
-                            <tr>
-                                <td>ลำดับที่</td>
-                                <td id="resSeq">-</td>
-                            </tr>
-                            <tr>
-                                <td>ทะเบียนสมาชิก</td>
-                                <td id="resId">-</td>
-                            </tr>
-                            <tr>
-                                <td>ชื่อ - นามสกุล</td>
-                                <td id="resName">-</td>
-                            </tr>
-                            <tr>
-                                <td>หน่วย</td>
-                                <td id="resUnit">-</td>
-                            </tr>
-                            <tr>
-                                <td>สถานที่ลงคะแนน</td>
-                                <td id="resPlace">-</td>
-                            </tr>
-                            <tr>
-                                <td>หมายเหตุ</td>
-                                <td id="resNote">-</td>
-                            </tr>
-                        </table>
-                    </div>
-
-                    <div class="slip-footer">
-                        <p><strong>สหกรณ์ออมทรัพย์ครูชุมพร จำกัด</strong></p>
-                        <p>77 หมู่ 4 ตำบลบางหมาก อำเภอเมือง จังหวัดชุมพร 86000</p>
-                        <p>วันที่ตรวจสอบ: <span id="slipDate">-</span></p>
-                    </div>
-                </div>
+            <div class="result-header">
+                <h3><i class="fas fa-file-alt"></i> ผลการตรวจสอบข้อมูลสมาชิก</h3>
             </div>
 
-            <div class="action-buttons">
-                <button class="btn btn-secondary" id="resetBtn">
-                    <i class="fas fa-redo"></i> ตรวจสอบใหม่
-                </button>
-                <button class="btn btn-primary" id="printBtn">
-                    <i class="fas fa-print"></i> พิมพ์รายงาน
-                </button>
-                <button class="btn btn-success" id="saveImageBtn">
-                    <i class="fas fa-share-square"></i> แชร์/บันทึกรูป
-                </button>
-            </div>
+            <div class="result-content">
+                <div id="printableArea">
+                    <table class="result-table">
+                        <tr>
+                            <td>ลำดับที่</td>
+                            <td id="resSeq">-</td>
+                        </tr>
+                        <tr>
+                            <td>ทะเบียนสมาชิก</td>
+                            <td id="resId">-</td>
+                        </tr>
+                        <tr>
+                            <td>ชื่อ - นามสกุล</td>
+                            <td id="resName">-</td>
+                        </tr>
+                        <tr>
+                            <td>หน่วย</td>
+                            <td id="resUnit">-</td>
+                        </tr>
+                        <tr>
+                            <td>สถานที่ลงคะแนน</td>
+                            <td id="resPlace">-</td>
+                        </tr>
+                        <tr>
+                            <td>หมายเหตุ</td>
+                            <td id="resNote">-</td>
+                        </tr>
+                    </table>
+                </div>
 
-            <p id="saveHint" style="text-align:center; color:#718096; font-size:0.85rem; padding:0 20px 15px; display:none;">
-                <i class="fas fa-info-circle"></i> กดปุ่มด้านบน แล้วเลือก "บันทึกรูปภาพ"
-            </p>
-
-            <!-- แจ้งเตือนถ้าต้องจับภาพหน้าจอด้วยตนเอง -->
-            <div id="manualCaptureNotice" class="manual-capture">
-                <i class="fas fa-mobile-alt"></i>
-                <strong>ระบบไม่สามารถสร้างรูปได้</strong><br>
-                กรุณาจับภาพหน้าจอด้วยตนเอง<br>
-                <small>iPhone: กดปุ่ม Power + Volume ขึ้นพร้อมกัน</small>
+                <div class="action-buttons">
+                    <button class="btn btn-secondary" id="resetBtn">
+                        <i class="fas fa-redo"></i> ตรวจสอบใหม่
+                    </button>
+                    <button class="btn btn-primary" id="printBtn">
+                        <i class="fas fa-print"></i> พิมพ์รายงาน
+                    </button>
+                    <button class="btn btn-success" id="saveImageBtn">
+                        <i class="fas fa-camera"></i> บันทึกรูปภาพ
+                    </button>
+                </div>
+                
+                <p id="saveHint" style="text-align:center; color:#718096; font-size:0.85rem; padding:15px 0 0; display:none;">
+                    <i class="fas fa-info-circle"></i> กดปุ่มด้านบน จะมีรูปปรากฏขึ้น ให้กดค้างที่รูปเพื่อบันทึก
+                </p>
             </div>
         </div>
     </div>
@@ -810,11 +748,11 @@
 
     <script>
         // ============================================
-        // CONFIGURATION
+        // CONFIGURATION (ใส่ URL ของ GAS Web App ที่นี่)
         // ============================================
+        const GAS_IMAGE_API = 'https://script.google.com/macros/s/AKfycbwKbqpu4ap02cH2pgMzjvBjj_IMAQRz6y_R6Lv99SdCe9T3NOkKE8cK7Q9aGhLrZjpk/exec';
         const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzLAE5A7_LEXNLIUULFDreFwCew3vb4yuKAC9k7WMIJWYjlTjGD9mRNkvKmO_rBtQpg/exec';
         
-        // Counter for image file names
         let imageCounter = 1;
 
         // ============================================
@@ -830,7 +768,7 @@
         };
 
         // ============================================
-        // DEVICE DETECTION
+        // IN-APP BROWSER DETECTION
         // ============================================
         function detectInAppBrowser() {
             const ua = navigator.userAgent.toLowerCase();
@@ -841,15 +779,6 @@
                 isIOS: /iphone|ipad|ipod/.test(ua),
                 isAndroid: /android/.test(ua)
             };
-        }
-
-        function isIOS() {
-            return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-        }
-
-        function isInAppBrowser() {
-            const ua = navigator.userAgent.toLowerCase();
-            return ua.includes('line') || ua.includes('fb') || ua.includes('facebook') || ua.includes('instagram');
         }
 
         function isMobileOrTablet() {
@@ -890,9 +819,7 @@
             try {
                 await navigator.clipboard.writeText(url);
                 feedback.style.display = 'block';
-                setTimeout(() => {
-                    feedback.style.display = 'none';
-                }, 3000);
+                setTimeout(() => { feedback.style.display = 'none'; }, 3000);
             } catch (err) {
                 const tempInput = document.createElement('input');
                 tempInput.value = url;
@@ -901,29 +828,14 @@
                 document.execCommand('copy');
                 document.body.removeChild(tempInput);
                 feedback.style.display = 'block';
-                setTimeout(() => {
-                    feedback.style.display = 'none';
-                }, 3000);
+                setTimeout(() => { feedback.style.display = 'none'; }, 3000);
             }
-        }
-
-        // รอให้ฟอนต์และ resource โหลดเสร็จ
-        async function waitForResources() {
-            if (document.fonts && document.fonts.ready) {
-                await document.fonts.ready;
-            }
-            
-            // iOS รอนานขึ้น
-            await new Promise(resolve => setTimeout(resolve, isIOS() ? 1200 : 300));
-            
-            await new Promise(resolve => requestAnimationFrame(resolve));
         }
 
         // ============================================
         // INITIALIZATION
         // ============================================
         function init() {
-            // Event Listeners
             elements.form.addEventListener('submit', handleSubmit);
             elements.memberId.addEventListener('input', handleMemberIdInput);
             elements.birthDate.addEventListener('input', handleBirthDateInput);
@@ -931,20 +843,16 @@
             document.getElementById('printBtn').addEventListener('click', printResult);
             document.getElementById('saveImageBtn').addEventListener('click', saveAsImage);
             
-            // Popup listeners
             document.getElementById('openBrowserBtn').addEventListener('click', openExternalBrowser);
             document.getElementById('copyLinkBtn').addEventListener('click', copyPageLink);
             document.getElementById('closePreviewBtn').addEventListener('click', closePreviewModal);
             
-            // แสดงคำแนะนำใต้ปุ่มบนมือถือ
             if (isTouchDevice()) {
                 document.getElementById('saveHint').style.display = 'block';
             }
             
-            // ตรวจสอบการเปิดผ่าน In-App Browser
             initInAppWarning();
             
-            // Keyboard shortcut
             document.addEventListener('keydown', function(e) {
                 if (e.key === 'Enter' && !e.shiftKey) {
                     if (document.activeElement === elements.memberId || 
@@ -955,13 +863,9 @@
                 }
             });
             
-            // Set initial focus
             elements.memberId.focus();
         }
 
-        // ============================================
-        // INPUT HANDLERS
-        // ============================================
         function handleMemberIdInput(e) {
             this.value = this.value.replace(/\D/g, '').slice(0, 5);
             hideStatus();
@@ -985,12 +889,8 @@
             hideResult();
         }
 
-        // ============================================
-        // FORM SUBMISSION
-        // ============================================
         async function handleSubmit(e) {
             e.preventDefault();
-            
             const idVal = elements.memberId.value.trim();
             const dateVal = elements.birthDate.value.trim();
 
@@ -1005,16 +905,12 @@
             elements.submitBtn.innerHTML = '<i class="fas fa-search"></i> ตรวจสอบสิทธิ์';
         }
 
-        // ============================================
-        // SEARCH LOGIC
-        // ============================================
         async function performSearch(id, date) {
             showStatus('กำลังตรวจสอบข้อมูลในระบบ...', 'loading');
             hideResult();
 
             try {
                 const response = await fetchWithJsonp(id, date);
-                
                 if (response && response.success) {
                     showResult(response.data);
                     showStatus('ค้นหาข้อมูลสำเร็จ!', 'success');
@@ -1027,14 +923,10 @@
             }
         }
 
-        // ============================================
-        // JSONP FETCH
-        // ============================================
         function fetchWithJsonp(id, date) {
             return new Promise((resolve) => {
                 const callbackName = `callback_${Date.now()}`;
                 const script = document.createElement('script');
-                
                 const params = new URLSearchParams({
                     q: id,
                     birthDate: date,
@@ -1060,9 +952,6 @@
             });
         }
 
-        // ============================================
-        // RESULT DISPLAY
-        // ============================================
         function showResult(data) {
             document.getElementById('resSeq').textContent = data.sequence || '-';
             document.getElementById('resId').textContent = data.memberId || '-';
@@ -1071,43 +960,23 @@
             document.getElementById('resPlace').textContent = data.pollingPlace || '-';
             document.getElementById('resNote').textContent = data.note || '-';
 
-            const today = new Date();
-            document.getElementById('slipDate').textContent = today.toLocaleDateString('th-TH', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-            });
-
-            // ซ่อน manual capture notice ทุกครั้งที่มีผลลัพธ์ใหม่
-            document.getElementById('manualCaptureNotice').style.display = 'none';
-            document.querySelector('.action-buttons').style.display = 'grid';
-
             elements.resultSection.style.display = 'block';
-            
             setTimeout(() => {
-                elements.resultSection.scrollIntoView({ 
-                    behavior: 'smooth',
-                    block: 'start'
-                });
+                elements.resultSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }, 100);
         }
 
-        // ============================================
-        // UTILITY FUNCTIONS
-        // ============================================
         function validateInputs(id, date) {
             if (id.length !== 5) {
                 showStatus('กรุณากรอกเลขทะเบียนให้ครบ 5 หลัก', 'error');
                 elements.memberId.focus();
                 return false;
             }
-
             if (date.length !== 10) {
                 showStatus('กรุณากรอกวันเกิดให้ครบ 8 หลัก', 'error');
                 elements.birthDate.focus();
                 return false;
             }
-
             return true;
         }
 
@@ -1125,147 +994,69 @@
         }
 
         // ============================================
-        // SAVE IMAGE: iOS Compatible
+        // SAVE IMAGE VIA GAS (Google Slides Backend)
         // ============================================
         async function saveAsImage() {
-            const captureArea = document.getElementById('captureArea');
             const saveBtn = document.getElementById('saveImageBtn');
             const originalText = saveBtn.innerHTML;
             const memberId = document.getElementById('resId').textContent || '00000';
-            
-            // Format file name
             const counterStr = imageCounter.toString().padStart(6, '0');
             const fileName = `ข้อมูลที่ลงคะแนน_${memberId}_${counterStr}.png`;
-            
-            // ซ่อน manual capture notice ก่อน
-            document.getElementById('manualCaptureNotice').style.display = 'none';
             
             saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> กำลังสร้างรูป...';
             saveBtn.disabled = true;
             
             try {
-                // ถ้าเปิดใน LINE บน iOS ให้แจ้งก่อน
-                if (isIOS() && isInAppBrowser()) {
-                    document.getElementById('inAppPopup').style.display = 'flex';
-                    throw new Error('LINE_iOS');
-                }
+                const payload = {
+                    sequence: document.getElementById('resSeq').textContent,
+                    memberId: memberId,
+                    fullName: document.getElementById('resName').textContent,
+                    unit: document.getElementById('resUnit').textContent,
+                    pollingPlace: document.getElementById('resPlace').textContent,
+                    note: document.getElementById('resNote').textContent,
+                    date: new Date().toLocaleDateString('th-TH', {
+                        year: 'numeric', month: 'long', day: 'numeric'
+                    })
+                };
                 
-                // รอ resource โหลดเสร็จ
-                await waitForResources();
-                
-                // iOS ใช้ scale ต่ำกว่าเพื่อป้องกัน canvas ใหญ่เกินไป
-                const scale = isIOS() ? 2 : 3;
-                
-                const canvas = await html2canvas(captureArea, { 
-                    backgroundColor: '#ffffff',
-                    scale: scale,
-                    useCORS: true,
-                    allowTaint: true,
-                    logging: true,
-                    width: captureArea.offsetWidth,
-                    height: captureArea.offsetHeight,
-                    foreignObjectRendering: isIOS()
+                const response = await fetch(GAS_IMAGE_API, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
                 });
                 
-                // ตรวจสอบว่า Canvas ว่างเปล่าหรือไม่
-                if (isCanvasBlank(canvas)) {
-                    throw new Error('Canvas is blank');
+                const result = await response.json();
+                
+                if (!result.success) {
+                    throw new Error(result.message || 'สร้างรูปไม่สำเร็จ');
                 }
                 
-                const dataUrl = canvas.toDataURL('image/png');
-                
-                if (!dataUrl || dataUrl === 'data:,') {
-                    throw new Error('Invalid data URL');
-                }
+                const imageUrl = `data:${result.mimeType};base64,${result.imageBase64}`;
                 
                 if (isTouchDevice()) {
-                    // บนมือถือ: ลองใช้ Web Share API ก่อน
-                    if (navigator.canShare) {
-                        const response = await fetch(dataUrl);
-                        const blob = await response.blob();
-                        const file = new File([blob], fileName, { type: 'image/png' });
-                        
-                        if (navigator.canShare({ files: [file] })) {
-                            await navigator.share({
-                                files: [file],
-                                title: 'ผลการตรวจสอบสมาชิก',
-                                text: 'บันทึกรูปภาพผลการตรวจสอบ'
-                            });
-                            
-                            showStatus('สร้างรูปภาพสำเร็จ', 'success');
-                            imageCounter++;
-                            return;
-                        }
-                    }
-                    
-                    // Fallback: แสดง Preview Modal
-                    document.getElementById('previewImg').src = dataUrl;
+                    // บนมือถือ แสดง Modal ให้กดค้างเซฟ
+                    document.getElementById('previewImg').src = imageUrl;
                     document.getElementById('imagePreviewModal').style.display = 'flex';
-                    showStatus('กรุณากดค้างที่รูปเพื่อบันทึก', 'success');
-                    
                 } else {
-                    // บนคอม: ดาวน์โหลดปกติ
+                    // บนคอม ดาวน์โหลดปกติ
                     const link = document.createElement('a');
                     link.download = fileName;
-                    link.href = dataUrl;
+                    link.href = imageUrl;
                     document.body.appendChild(link);
                     link.click();
                     document.body.removeChild(link);
-                    
-                    showStatus('บันทึกรูปภาพสำเร็จ: ' + fileName, 'success');
                 }
                 
+                showStatus('สร้างรูปภาพสำเร็จ!', 'success');
                 imageCounter++;
                 
             } catch (error) {
-                console.error('Error generating image:', error);
-                
-                if (error.message === 'LINE_iOS') {
-                    // แสดง Popup แล้ว ไม่ต้องแสดง error
-                } else if (error.name === 'AbortError') {
-                    showStatus('ยกเลิกการแชร์', 'success');
-                } else {
-                    showStatus('สร้างรูปภาพไม่สำเร็จ กรุณาลองใหม่อีกครั้ง', 'error');
-                    
-                    // iOS ที่ html2canvas ล้มเหลว ให้แสดงตัวเลือกแคปหน้าจอด้วยตนเอง
-                    if (isIOS()) {
-                        showManualCaptureOption();
-                    }
-                }
-                
+                console.error('Error generating image via GAS:', error);
+                showStatus('สร้างรูปภาพไม่สำเร็จ กรุณาลองใหม่อีกครั้ง', 'error');
             } finally {
                 saveBtn.innerHTML = originalText;
                 saveBtn.disabled = false;
             }
-        }
-
-        function isCanvasBlank(canvas) {
-            const context = canvas.getContext('2d');
-            const pixelBuffer = new Uint32Array(
-                context.getImageData(0, 0, canvas.width, canvas.height).data.buffer
-            );
-            return !pixelBuffer.some(color => color !== 0);
-        }
-
-        function showManualCaptureOption() {
-            // ซ่อนปุ่ม action เพื่อให้แคปหน้าจอสะอาด
-            document.querySelector('.action-buttons').style.display = 'none';
-            document.getElementById('saveHint').style.display = 'none';
-            
-            // แสดงคำแนะนำการจับภาพหน้าจอ
-            document.getElementById('manualCaptureNotice').style.display = 'block';
-            
-            // เลื่อนให้เห็นคำแนะนำ
-            document.getElementById('manualCaptureNotice').scrollIntoView({
-                behavior: 'smooth',
-                block: 'nearest'
-            });
-            
-            // แสดงปุ่ม action กลับมาหลังจาก 8 วินาที
-            setTimeout(() => {
-                document.querySelector('.action-buttons').style.display = 'grid';
-                document.getElementById('saveHint').style.display = 'block';
-            }, 8000);
         }
 
         function closePreviewModal() {
@@ -1275,7 +1066,6 @@
         function showStatus(message, type) {
             elements.statusMessage.textContent = message;
             elements.statusMessage.className = `status-message status-${type}`;
-            
             if (type !== 'error') {
                 setTimeout(hideStatus, 3000);
             }
@@ -1290,9 +1080,6 @@
             elements.resultSection.style.display = 'none';
         }
 
-        // ============================================
-        // INITIALIZE SYSTEM
-        // ============================================
         document.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
