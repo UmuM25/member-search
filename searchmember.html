@@ -758,9 +758,13 @@
                     <i class="fas fa-print"></i> พิมพ์รายงาน
                 </button>
                 <button class="btn btn-success" id="saveImageBtn">
-                    <i class="fas fa-camera"></i> บันทึกรูปภาพ
+                    <i class="fas fa-share-square"></i> แชร์/บันทึกรูป
                 </button>
             </div>
+            
+            <p id="saveHint" style="text-align:center; color:#718096; font-size:0.85rem; padding:0 20px 15px; display:none;">
+                <i class="fas fa-info-circle"></i> กดปุ่มด้านบน แล้วเลือก "บันทึกรูปภาพ"
+            </p>
         </div>
     </div>
 
@@ -815,6 +819,10 @@
         function isMobileOrTablet() {
             return /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(navigator.userAgent) || 
                    (navigator.maxTouchPoints > 1 && window.innerWidth < 1024);
+        }
+
+        function isTouchDevice() {
+            return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
         }
 
         function initInAppWarning() {
@@ -879,6 +887,11 @@
             document.getElementById('openBrowserBtn').addEventListener('click', openExternalBrowser);
             document.getElementById('copyLinkBtn').addEventListener('click', copyPageLink);
             document.getElementById('closePreviewBtn').addEventListener('click', closePreviewModal);
+            
+            // แสดงคำแนะนำใต้ปุ่มบนมือถือ
+            if (isTouchDevice()) {
+                document.getElementById('saveHint').style.display = 'block';
+            }
             
             // ตรวจสอบการเปิดผ่าน In-App Browser
             initInAppWarning();
@@ -1060,21 +1073,24 @@
         }
 
         // ============================================
-        // SAVE IMAGE: html2canvas + Preview Modal
+        // SAVE IMAGE: Web Share API + Fallback
         // ============================================
         async function saveAsImage() {
             const captureArea = document.getElementById('captureArea');
             const saveBtn = document.getElementById('saveImageBtn');
             const originalText = saveBtn.innerHTML;
+            const memberId = document.getElementById('resId').textContent || '00000';
+            
+            // Format file name
+            const counterStr = imageCounter.toString().padStart(6, '0');
+            const fileName = `ข้อมูลที่ลงคะแนน_${memberId}_${counterStr}.png`;
             
             saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> กำลังสร้างรูป...';
             saveBtn.disabled = true;
             
             try {
-                // รอให้ฟอนต์และไอคอนโหลดเสร็จก่อน
+                // รอให้ฟอนต์และไอคอนโหลดเสร็จ
                 await document.fonts.ready;
-                
-                // รอเพิ่มอีกนิดสำหรับ Font Awesome
                 await new Promise(resolve => setTimeout(resolve, 300));
                 
                 // แคปเฉพาะส่วน #captureArea
@@ -1090,15 +1106,55 @@
                 
                 const dataUrl = canvas.toDataURL('image/png');
                 
-                // แสดง Preview Modal ให้ผู้ใช้กดค้างเซฟ
-                document.getElementById('previewImg').src = dataUrl;
-                document.getElementById('imagePreviewModal').style.display = 'flex';
+                if (isTouchDevice()) {
+                    // บนมือถือ: ลองใช้ Web Share API ก่อน
+                    if (navigator.canShare) {
+                        const response = await fetch(dataUrl);
+                        const blob = await response.blob();
+                        const file = new File([blob], fileName, { type: 'image/png' });
+                        
+                        if (navigator.canShare({ files: [file] })) {
+                            await navigator.share({
+                                files: [file],
+                                title: 'ผลการตรวจสอบสมาชิก',
+                                text: 'บันทึกรูปภาพผลการตรวจสอบ'
+                            });
+                            
+                            showStatus('สร้างรูปภาพสำเร็จ', 'success');
+                            imageCounter++;
+                            return;
+                        }
+                    }
+                    
+                    // ถ้า Share API ไม่รองรับ → แสดง Preview Modal ให้กดค้าง
+                    document.getElementById('previewImg').src = dataUrl;
+                    document.getElementById('imagePreviewModal').style.display = 'flex';
+                    showStatus('กรุณากดค้างที่รูปเพื่อบันทึก', 'success');
+                    
+                } else {
+                    // บนคอม: ดาวน์โหลดปกติ
+                    const link = document.createElement('a');
+                    link.download = fileName;
+                    link.href = dataUrl;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    
+                    showStatus('บันทึกรูปภาพสำเร็จ: ' + fileName, 'success');
+                }
                 
-                showStatus('สร้างรูปภาพสำเร็จ กรุณากดค้างที่รูปเพื่อบันทึก', 'success');
+                imageCounter++;
                 
             } catch (error) {
                 console.error('Error generating image:', error);
-                showStatus('สร้างรูปภาพไม่สำเร็จ กรุณาลองใหม่อีกครั้ง', 'error');
+                
+                // ถ้า Share API ล้มเหลว (เช่นผู้ใช้กดยกเลิก) ไม่ต้องแสดง error
+                if (error.name === 'AbortError') {
+                    showStatus('ยกเลิกการแชร์', 'success');
+                } else {
+                    showStatus('สร้างรูปภาพไม่สำเร็จ กรุณาลองใหม่อีกครั้ง', 'error');
+                }
+                
             } finally {
                 saveBtn.innerHTML = originalText;
                 saveBtn.disabled = false;
